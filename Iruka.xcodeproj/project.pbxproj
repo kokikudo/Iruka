@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FD55ED86262816520074530B /* RatingControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD55ED85262816520074530B /* RatingControl.swift */; };
 		FD629D74262133B5004948F8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD629D73262133B5004948F8 /* AppDelegate.swift */; };
 		FD629D76262133B5004948F8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD629D75262133B5004948F8 /* SceneDelegate.swift */; };
 		FD629D78262133B5004948F8 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD629D77262133B5004948F8 /* HomeViewController.swift */; };
@@ -17,6 +18,7 @@
 		FD629D96262133B9004948F8 /* IrukaUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD629D95262133B9004948F8 /* IrukaUITests.swift */; };
 		FD62C86826256245000B277A /* ItemEditPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD62C86726256245000B277A /* ItemEditPageViewController.swift */; };
 		FD62C8702625787A000B277A /* ItemListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD62C86F2625787A000B277A /* ItemListTableViewController.swift */; };
+		FD72EACD262C6232002D4C85 /* ItemData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD72EACC262C6232002D4C85 /* ItemData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,6 +39,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		FD55ED85262816520074530B /* RatingControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingControl.swift; sourceTree = "<group>"; };
 		FD629D70262133B5004948F8 /* Iruka.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Iruka.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD629D73262133B5004948F8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FD629D75262133B5004948F8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -53,6 +56,7 @@
 		FD629D97262133B9004948F8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FD62C86726256245000B277A /* ItemEditPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemEditPageViewController.swift; sourceTree = "<group>"; };
 		FD62C86F2625787A000B277A /* ItemListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemListTableViewController.swift; sourceTree = "<group>"; };
+		FD72EACC262C6232002D4C85 /* ItemData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +111,8 @@
 				FD629D75262133B5004948F8 /* SceneDelegate.swift */,
 				FD629D77262133B5004948F8 /* HomeViewController.swift */,
 				FD629D79262133B5004948F8 /* Main.storyboard */,
+				FD72EACC262C6232002D4C85 /* ItemData.swift */,
+				FD55ED85262816520074530B /* RatingControl.swift */,
 				FD62C86F2625787A000B277A /* ItemListTableViewController.swift */,
 				FD62C86726256245000B277A /* ItemEditPageViewController.swift */,
 				FD629D7C262133B9004948F8 /* Assets.xcassets */,
@@ -264,10 +270,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FD72EACD262C6232002D4C85 /* ItemData.swift in Sources */,
 				FD62C86826256245000B277A /* ItemEditPageViewController.swift in Sources */,
 				FD62C8702625787A000B277A /* ItemListTableViewController.swift in Sources */,
 				FD629D78262133B5004948F8 /* HomeViewController.swift in Sources */,
 				FD629D74262133B5004948F8 /* AppDelegate.swift in Sources */,
+				FD55ED86262816520074530B /* RatingControl.swift in Sources */,
 				FD629D76262133B5004948F8 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
