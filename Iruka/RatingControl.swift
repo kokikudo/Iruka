@@ -14,6 +14,7 @@ import UIKit
     var rating = 0 { // 星の数。更新時に設定値より下の配列の星をセレクト状態にする関数を実行
         didSet {
             updateButtonSelectionStates()
+            NotificationCenter.default.post(name: .changeRatingNotification, object: nil)
         }
     }
     // 星のサイズ。storyboardのinspecter上でいじれるようになる。
