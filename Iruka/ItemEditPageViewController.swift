@@ -26,6 +26,11 @@ class ItemEditPageViewController: UIViewController, UIImagePickerControllerDeleg
     @IBOutlet weak var impressionText: UITextView!
     @IBOutlet weak var impressionWordCountLabel: UILabel!
     private let impressionMaxCount = 150
+    @IBOutlet weak var ratingCount: RatingControl!
+    private var isReEvaluation = false
+    private var impressionDict: Dictionary<String, String> = ["before": "", "after": ""]
+    private var ratingDict: Dictionary<String, Int> = ["before": 0, "after": 0]
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,12 +39,27 @@ class ItemEditPageViewController: UIViewController, UIImagePickerControllerDeleg
         priceText.delegate = self
         impressionText.delegate = self
         
-        // タップでキーボードを下げる
+        // 何もないところをタップでキーボードを下げる
         downKeyboardInTap()
+        // 保存ボタンの初期値はfalse。必須項目入力後にtrue
+        saveButton.isEnabled = false
+        
+        // 保存ボタンの有効無効の判断をするメソッドを実行させるための通知を登録
+        // キーボードが閉じた時に通知
+        NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification,
+                                               object: nil,
+                                               queue: nil,
+                                               using: didchangeNotfication(notification:))
+        // 評価が変更されたら通知
+        NotificationCenter.default.addObserver(forName: .changeRatingNotification,
+                                               object: nil,
+                                               queue: nil,
+                                               using: didchangeNotfication(notification:))
+        
         // 金額入力のキーボードにリターンキーを追加
         addReturnBotton()
         // 感想文のプレースホルダーの状態
-        impressionText.text = "感想を入力..."
+        impressionText.text = "(150文字まで)"
         impressionText.textColor = UIColor.lightGray
         // 現在日時を取得
         let datefomatter = DateFormatter()
@@ -47,6 +67,8 @@ class ItemEditPageViewController: UIViewController, UIImagePickerControllerDeleg
         datefomatter.timeStyle = .none
         datefomatter.locale = Locale(identifier: "ja_JP")
         registrationTimeText.text = datefomatter.string(from: Date())
+        // 過去の感想を閲覧するスイッチは非表示
+        changeButton.isHidden = true
     }
     
     
@@ -84,10 +106,10 @@ class ItemEditPageViewController: UIViewController, UIImagePickerControllerDeleg
     @IBAction func selectImage(_ sender: UITapGestureRecognizer) {
         
         // アラートインスタンス
-        let alertController: UIAlertController = UIAlertController(title: "写真を選択", message: "選択してください", preferredStyle: .alert)
+        let alertController = UIAlertController(title: "写真を選択", message: "選択してください", preferredStyle: .alert)
         
         // カメラ撮影
-        let cameraAction: UIAlertAction = UIAlertAction(title: "カメラで撮影", style: .default) { (action) in
+        let cameraAction = UIAlertAction(title: "カメラで撮影", style: .default) { (action) in
             
             let cameraPickerController = UIImagePickerController()
             cameraPickerController.sourceType = .camera
@@ -96,7 +118,7 @@ class ItemEditPageViewController: UIViewController, UIImagePickerControllerDeleg
         }
         
         // ライブラリ
-        let libralyAction: UIAlertAction = UIAlertAction(title: "ライブラリから選択", style: .default) { (action) in
+        let libralyAction = UIAlertAction(title: "ライブラリから選択", style: .default) { (action) in
             
             let imagePickerController = UIImagePickerController()
             imagePickerController.sourceType = .photoLibrary
@@ -105,7 +127,7 @@ class ItemEditPageViewController: UIViewController, UIImagePickerControllerDeleg
         }
         
         // キャンセル
-        let cancelAction: UIAlertAction = UIAlertAction(title: "キャンセル", style: .cancel, handler: {(action: UIAlertAction!) -> Void in
+        let cancelAction = UIAlertAction(title: "キャンセル", style: .cancel, handler: { (action) in
             self.dismiss(animated: true, completion: nil)
         })
         
@@ -131,6 +153,37 @@ class ItemEditPageViewController: UIViewController, UIImagePickerControllerDeleg
         
         dismiss(animated: true, completion: nil)
     }
+    
+    // キーボードが閉じた時 or 評価の星の個数が変更された時に呼ばれるメソッド。全て入力したら保存ボタンが有効になる
+    func didchangeNotfication(notification: Notification) {
+        saveButton.isEnabled =
+            nameText.text?.isEmpty == false &&
+            priceText.text?.isEmpty == false &&
+            impressionText.text?.isEmpty == false &&
+            ratingCount.rating > 0
+    }
+    
+    // 保存ボタンを押されたときの処理
+    @IBAction func tapSaveButton(_ sender: UIButton) {
+        
+        let alertController = UIAlertController(title: "確認", message: "登録してもよろしいですか？", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "はい", style: .default) { (action) in
+            
+            // データを保存する処理を書く
+            print("ok")
+            
+            
+            
+        }
+        let noAction = UIAlertAction(title: "いいえ(編集に戻る)", style: .default) { (action) in }
+        
+        alertController.addAction(okAction)
+        alertController.addAction(noAction)
+        
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    
     /*
      // MARK: - Navigation
      
@@ -143,11 +196,15 @@ class ItemEditPageViewController: UIViewController, UIImagePickerControllerDeleg
     
 }
 
-// TextFieldのデリゲートとその他のメソッド
+extension Notification.Name {
+    static let changeRatingNotification = Notification.Name("changeRatingNotification")
+}
+
+// TextFieldに関するデリゲートとその他のメソッド
 extension ItemEditPageViewController: UITextFieldDelegate {
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        if textField.tag == 2 {
+        if textField == priceText {
             textField.text = ""
         }
     }
@@ -159,7 +216,7 @@ extension ItemEditPageViewController: UITextFieldDelegate {
     }
     // 金額入力後、完了ボタンを押すと通貨記号が付いたフォーマットに変わりキーボードを閉じる
     @objc func priceTextShouldReturn() -> Bool {
-        // 金額に単位を追加
+        // フォーマットに適用するために金額をFloat型に変換
         guard let price = Float(priceText.text!) else {
             fatalError("数字以外の文字が入力されました")
         }
@@ -175,15 +232,19 @@ extension ItemEditPageViewController: UITextFieldDelegate {
     
     // 文字数制限
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        
-        // 入力を反映したテキストを取得
-        let resultText: String = (textField.text! as NSString).replacingCharacters(in: range, with: string)
-        return resultText.count <= itemNameTextMaxCount
+        // 商品名のみに文字数制限
+        if textField == nameText {
+            // 入力を反映したテキストを取得
+            let resultText: String = (textField.text! as NSString).replacingCharacters(in: range, with: string)
+            return resultText.count <= itemNameTextMaxCount
+        } else {
+            return true
+        }
     }
     
     // 現在の文字数表示
     func textFieldDidChangeSelection(_ textField: UITextField) {
-        if textField.tag == 1 {
+        if textField == nameText {
             wordCountLabel.text = "( \(textField.text!.count) / \(itemNameTextMaxCount) )"
         }
     }
@@ -219,7 +280,7 @@ extension ItemEditPageViewController: UITextViewDelegate {
     }
     func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text.isEmpty {
-            textView.text = "(必須。150文字まで)"
+            textView.text = "(150文字まで)"
             textView.textColor = UIColor.lightGray
         }
     }

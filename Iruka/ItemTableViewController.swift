@@ -7,34 +7,68 @@
 
 import UIKit
 
-class ItemListTableViewController: UITableViewController {
+class ItemTableViewController: UITableViewController, UISearchBarDelegate{
 
+    @IBOutlet weak var search: UISearchBar!
+    
+    let myRefreshControl = UIRefreshControl()
+    var items = [Item]()
+    var currentItems = [Item]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        search.delegate = self
+        search.enablesReturnKeyAutomatically = false
+        loadSampleItems()
+        currentItems = items
     }
 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 50
+        return currentItems.count
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        //let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-        let cell = UITableViewCell(style: .default, reuseIdentifier: "cell")
-        cell.textLabel?.text = String(indexPath.row)
-
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? ItemTableViewCell else {
+            fatalError("セルのダウンキャストに失敗しました")
+        }
+        let item = currentItems[indexPath.row]
+        cell.registrationTimeText.text = item.registrationTime
+        cell.photoImage.image = item.photoImage
+        cell.itemNameText.text = item.name
         return cell
     }
     
+    // private mathod
+    // サンプルデータをセット
+    private func loadSampleItems() {
+        let image = UIImage(named: "defaultImage.001")
+        let item = Item(registrationTime: "2021年4月20日", photoImage: image, name: "testItem", price: "500", impression: "テストテストテスト", rating: 4)
+        items += [item]
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
+        }
+    //
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        guard !searchText.isEmpty else {
+            currentItems = items
+            tableView.reloadData()
+            return
+        }
+        currentItems = items.filter({ item -> Bool in
+            item.name.lowercased().contains(searchText.lowercased())
+        })
+        tableView.reloadData()
+    }
 
     /*
     // Override to support conditional editing of the table view.
