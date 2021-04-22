@@ -22,11 +22,14 @@ class ItemEditPageViewController: UIViewController, UIImagePickerControllerDeleg
     @IBOutlet weak var ratingLabel: UILabel!
     @IBOutlet weak var impressionLabel: UILabel!
     @IBOutlet weak var changeButton: UISwitch!
-    @IBOutlet weak var saveButton: UIButton!
+    @IBOutlet weak var saveButton: UIBarButtonItem!
     @IBOutlet weak var impressionText: UITextView!
     @IBOutlet weak var impressionWordCountLabel: UILabel!
     private let impressionMaxCount = 150
     @IBOutlet weak var ratingCount: RatingControl!
+    
+    var item: Item?
+    
     private var isReEvaluation = false
     private var impressionDict: Dictionary<String, String> = ["before": "", "after": ""]
     private var ratingDict: Dictionary<String, Int> = ["before": 0, "after": 0]
@@ -61,14 +64,27 @@ class ItemEditPageViewController: UIViewController, UIImagePickerControllerDeleg
         // 感想文のプレースホルダーの状態
         impressionText.text = "(150文字まで)"
         impressionText.textColor = UIColor.lightGray
-        // 現在日時を取得
-        let datefomatter = DateFormatter()
-        datefomatter.dateStyle = .long
-        datefomatter.timeStyle = .none
-        datefomatter.locale = Locale(identifier: "ja_JP")
-        registrationTimeText.text = datefomatter.string(from: Date())
-        // 過去の感想を閲覧するスイッチは非表示
-        changeButton.isHidden = true
+        
+        // セルから移動してきた場合は商品の情報を反映しスイッチを表示、そうでなければ現在日時を取得しスイッチ非表示
+        if let item = item {
+            photoImage.image = item.photoImage
+            registrationTimeText.text = item.registrationTime
+            nameText.text = item.name
+            priceText.text = item.price
+            impressionText.text = item.impression
+            ratingCount.rating = item.rating
+            changeButton.isHidden = true
+        } else {
+            // 現在日時を取得
+            let datefomatter = DateFormatter()
+            datefomatter.dateStyle = .long
+            datefomatter.timeStyle = .none
+            datefomatter.locale = Locale(identifier: "ja_JP")
+            registrationTimeText.text = datefomatter.string(from: Date())
+            changeButton.isHidden = true
+        }
+        
+        
     }
     
     
@@ -127,9 +143,7 @@ class ItemEditPageViewController: UIViewController, UIImagePickerControllerDeleg
         }
         
         // キャンセル
-        let cancelAction = UIAlertAction(title: "キャンセル", style: .cancel, handler: { (action) in
-            self.dismiss(animated: true, completion: nil)
-        })
+        let cancelAction = UIAlertAction(title: "キャンセル", style: .cancel, handler: nil)
         
         // 各アラートアクションを追加
         alertController.addAction(cameraAction)
@@ -163,17 +177,21 @@ class ItemEditPageViewController: UIViewController, UIImagePickerControllerDeleg
             ratingCount.rating > 0
     }
     
-    // 保存ボタンを押されたときの処理
-    @IBAction func tapSaveButton(_ sender: UIButton) {
-        
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        super.prepare(for: segue, sender: sender)
+        /*
         let alertController = UIAlertController(title: "確認", message: "登録してもよろしいですか？", preferredStyle: .alert)
         let okAction = UIAlertAction(title: "はい", style: .default) { (action) in
             
-            // データを保存する処理を書く
-            print("ok")
+            // 新しい商品をインスタンス化
+            let photo = self.photoImage.image
+            let registrationTime = self.registrationTimeText.text
+            let name = self.nameText.text
+            let price = self.priceText.text
+            let impression = self.impressionText.text
+            let rating = self.ratingCount.rating
             
-            
-            
+            self.item = Item(registrationTime: registrationTime!, photoImage: photo, name: name!, price: price!, impression: impression!, rating: rating)
         }
         let noAction = UIAlertAction(title: "いいえ(編集に戻る)", style: .default) { (action) in }
         
@@ -181,19 +199,32 @@ class ItemEditPageViewController: UIViewController, UIImagePickerControllerDeleg
         alertController.addAction(noAction)
         
         present(alertController, animated: true, completion: nil)
+        */
+        let photo = self.photoImage.image
+        let registrationTime = self.registrationTimeText.text
+        let name = self.nameText.text
+        let price = self.priceText.text
+        let impression = self.impressionText.text
+        let rating = self.ratingCount.rating
+        
+        self.item = Item(registrationTime: registrationTime!, photoImage: photo, name: name!, price: price!, impression: impression!, rating: rating)
     }
-    
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
-    
+
+    // キャンセルボタンの挙動。新規登録と既存の編集で処理を変える
+    @IBAction func cancel(_ sender: UIBarButtonItem) {
+        
+        // 
+        let isPresentingInAddItemMode = presentingViewController is UINavigationController
+        
+        if isPresentingInAddItemMode {
+            dismiss(animated: true, completion: nil)
+        } else if let owningNavigationController = navigationController {
+            owningNavigationController.popViewController(animated: true)
+        } else {
+            fatalError("商品ページがナビゲーションコントローラの中にありません。")
+        }
+    }
+
 }
 
 extension Notification.Name {
