@@ -10,7 +10,7 @@
 		0523F9FA89B26154BE6ACFD4 /* Pods_Iruka_IrukaUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F373989057D7F4E5B2349D1 /* Pods_Iruka_IrukaUITests.framework */; };
 		139062BA1D760ECC0383437D /* Pods_Iruka.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A7667B20CC5A2B8CD1F7974 /* Pods_Iruka.framework */; };
 		B60866D6CAB7D200F6450C7C /* Pods_IrukaTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D78AB9408B8348643025338D /* Pods_IrukaTests.framework */; };
-		FD22DBE7263B239D0050838E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FD22DBE6263B239D0050838E /* GoogleService-Info.plist */; };
+		FD14C17C264BAAA800E751F8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FD14C17B264BAAA800E751F8 /* GoogleService-Info.plist */; };
 		FD461B60262D71AC00F736C6 /* ItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD461B5F262D71AB00F736C6 /* ItemTableViewCell.swift */; };
 		FD55ED86262816520074530B /* RatingControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD55ED85262816520074530B /* RatingControl.swift */; };
 		FD629D74262133B5004948F8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD629D73262133B5004948F8 /* AppDelegate.swift */; };
@@ -53,7 +53,7 @@
 		5E5A3ADE19C467940FFE9C96 /* Pods-Iruka.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Iruka.debug.xcconfig"; path = "Target Support Files/Pods-Iruka/Pods-Iruka.debug.xcconfig"; sourceTree = "<group>"; };
 		A5D63A295330B06AC919FAB5 /* Pods-IrukaTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IrukaTests.release.xcconfig"; path = "Target Support Files/Pods-IrukaTests/Pods-IrukaTests.release.xcconfig"; sourceTree = "<group>"; };
 		D78AB9408B8348643025338D /* Pods_IrukaTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_IrukaTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		FD22DBE6263B239D0050838E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		FD14C17B264BAAA800E751F8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		FD461B5F262D71AB00F736C6 /* ItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemTableViewCell.swift; sourceTree = "<group>"; };
 		FD55ED85262816520074530B /* RatingControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingControl.swift; sourceTree = "<group>"; };
 		FD629D70262133B5004948F8 /* Iruka.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Iruka.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -165,7 +165,7 @@
 				FD629D7C262133B9004948F8 /* Assets.xcassets */,
 				FD629D7E262133B9004948F8 /* LaunchScreen.storyboard */,
 				FD629D81262133B9004948F8 /* Info.plist */,
-				FD22DBE6263B239D0050838E /* GoogleService-Info.plist */,
+				FD14C17B264BAAA800E751F8 /* GoogleService-Info.plist */,
 			);
 			path = Iruka;
 			sourceTree = "<group>";
@@ -297,7 +297,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FD629D80262133B9004948F8 /* LaunchScreen.storyboard in Resources */,
-				FD22DBE7263B239D0050838E /* GoogleService-Info.plist in Resources */,
+				FD14C17C264BAAA800E751F8 /* GoogleService-Info.plist in Resources */,
 				FD629D7D262133B9004948F8 /* Assets.xcassets in Resources */,
 				FD629D7B262133B5004948F8 /* Main.storyboard in Resources */,
 			);
@@ -540,6 +540,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = /Users/kudokoki/Swift/Iruka;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -595,6 +596,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = /Users/kudokoki/Swift/Iruka;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;

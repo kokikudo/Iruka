@@ -6,19 +6,16 @@
 //
 
 import UIKit
+import RealmSwift
 
-class Item {
+class Item: Object {
     
-    
-    static var supportsSecureCoding: Bool = true
-    
-    var registrationTime: String
-    var photoImage: UIImage?
-    var name: String
-    var price: String
-    var impression: String
-    var rating: Int
-    
+    @objc dynamic var registrationTime: String
+    @objc dynamic var photoImage: UIImage
+    @objc dynamic var name: String
+    @objc dynamic var price: String
+    @objc dynamic var impression: String
+    @objc dynamic var rating: Int
     
     
     struct PropertyKey {
@@ -30,7 +27,8 @@ class Item {
         static let rating = "rating"
     }
     
-    init(registrationTime: String, photoImage: UIImage?, name: String, price: String, impression: String, rating: Int) {
+    init(registrationTime: String, photoImage: UIImage, name: String, price: String, impression: String, rating: Int) {
+        
         self.registrationTime = registrationTime
         self.photoImage = photoImage
         self.name = name
@@ -38,5 +36,7 @@ class Item {
         self.impression = impression
         self.rating = rating
     }
+    
+    
 }
 

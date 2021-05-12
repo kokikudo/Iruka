@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 class ItemEditPageViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
@@ -29,6 +30,8 @@ class ItemEditPageViewController: UIViewController, UIImagePickerControllerDeleg
     @IBOutlet weak var ratingCount: RatingControl!
     
     var item: Item?
+    var realm = try! Realm()
+    
     
     private var isReEvaluation = false
     private var impressionDict: Dictionary<String, String> = ["before": "", "after": ""]
@@ -177,9 +180,9 @@ class ItemEditPageViewController: UIViewController, UIImagePickerControllerDeleg
             ratingCount.rating > 0
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        super.prepare(for: segue, sender: sender)
-        /*
+    @IBAction func saveRealm(_ sender: Any) {
+        
+        /* 保存確認のアラート表示
         let alertController = UIAlertController(title: "確認", message: "登録してもよろしいですか？", preferredStyle: .alert)
         let okAction = UIAlertAction(title: "はい", style: .default) { (action) in
             
@@ -200,14 +203,15 @@ class ItemEditPageViewController: UIViewController, UIImagePickerControllerDeleg
         
         present(alertController, animated: true, completion: nil)
         */
-        let photo = self.photoImage.image
-        let registrationTime = self.registrationTimeText.text
-        let name = self.nameText.text
-        let price = self.priceText.text
-        let impression = self.impressionText.text
-        let rating = self.ratingCount.rating
+    
+        let item = Item(registrationTime: registrationTimeText.text!, photoImage: photoImage.image!, name: nameText.text!, price: priceText.text!, impression: impressionText.text, rating: ratingCount.rating)
         
-        self.item = Item(registrationTime: registrationTime!, photoImage: photo, name: name!, price: price!, impression: impression!, rating: rating)
+        try! realm.write {
+            realm.add(item)
+        }
+        
+        // この画面をスタックから外し前の画面に戻る。
+        self.navigationController?.popViewController(animated: true)
     }
 
     // キャンセルボタンの挙動。新規登録と既存の編集で処理を変える
