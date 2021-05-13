@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 class ItemEditPageViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
@@ -29,6 +30,8 @@ class ItemEditPageViewController: UIViewController, UIImagePickerControllerDeleg
     @IBOutlet weak var ratingCount: RatingControl!
     
     var item: Item?
+    var realm = try! Realm()
+    
     
     private var isReEvaluation = false
     private var impressionDict: Dictionary<String, String> = ["before": "", "after": ""]
@@ -67,7 +70,7 @@ class ItemEditPageViewController: UIViewController, UIImagePickerControllerDeleg
         
         // セルから移動してきた場合は商品の情報を反映しスイッチを表示、そうでなければ現在日時を取得しスイッチ非表示
         if let item = item {
-            photoImage.image = item.photoImage
+            //photoImage.image = item.photoImage
             registrationTimeText.text = item.registrationTime
             nameText.text = item.name
             priceText.text = item.price
@@ -87,6 +90,11 @@ class ItemEditPageViewController: UIViewController, UIImagePickerControllerDeleg
         
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        presentingViewController?.beginAppearanceTransition(true, animated: animated)
+    }
     
     func downKeyboardInTap() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
@@ -177,9 +185,9 @@ class ItemEditPageViewController: UIViewController, UIImagePickerControllerDeleg
             ratingCount.rating > 0
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        super.prepare(for: segue, sender: sender)
-        /*
+    @IBAction func saveRealm(_ sender: Any) {
+        
+        /* 保存確認のアラート表示
         let alertController = UIAlertController(title: "確認", message: "登録してもよろしいですか？", preferredStyle: .alert)
         let okAction = UIAlertAction(title: "はい", style: .default) { (action) in
             
@@ -200,14 +208,23 @@ class ItemEditPageViewController: UIViewController, UIImagePickerControllerDeleg
         
         present(alertController, animated: true, completion: nil)
         */
-        let photo = self.photoImage.image
-        let registrationTime = self.registrationTimeText.text
-        let name = self.nameText.text
-        let price = self.priceText.text
-        let impression = self.impressionText.text
-        let rating = self.ratingCount.rating
+    
         
-        self.item = Item(registrationTime: registrationTime!, photoImage: photo, name: name!, price: price!, impression: impression!, rating: rating)
+        //let item = Item(registrationTime: registrationTimeText.text!, name: nameText.text!, price: priceText.text!, impression: impressionText.text, rating: ratingCount.rating)
+        
+        let item = Item()
+        item.registrationTime = registrationTimeText.text!
+        item.name = nameText.text!
+        item.price = priceText.text!
+        item.impression = impressionText.text
+        item.rating = ratingCount.rating
+        
+        try! realm.write {
+            realm.add(item)
+        }
+        
+        // この画面をスタックから外し前の画面に戻る。
+        self.dismiss(animated: true, completion: nil)
     }
 
     // キャンセルボタンの挙動。新規登録と既存の編集で処理を変える
