@@ -108,7 +108,7 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
                     fatalError("ItemEditPageViewController への遷移に失敗しました。")
                 }
                 
-                //destnation.item = self.items[indexPath.row]
+                destnation.item = self.itemList[indexPath.row]
             }
         default:
             fatalError("segueのIDが一致しませんでした。")
@@ -116,28 +116,30 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
         
     }
     
-    /* 保存ボタンが押されてこのページに戻ってきた時に実行。TableViewを更新する
+    // 保存ボタンが押されてこのページに戻ってきた時に実行。TableViewを更新する
     @IBAction func unwindToItemList(sender: UIStoryboardSegue) {
         
-        // 遷移元の確認と遷移元で作成したitemデータを取得
-        if let sourceViewController = sender.source as? ItemEditPageViewController,
-           let item = sourceViewController.item {
+        // プライマリキーの有無で新規登録か既存の編集を判断し、Realmを更新する。
+        if let sourceViewController = sender.source as? ItemEditPageViewController {
             
-            // セルがタップされていた場合（編集の場合）その行の値を更新する
-            if let selectedIndexPath = tableView.indexPathForSelectedRow {
-                items[selectedIndexPath.row] = item
-                //currentItems = items
-                tableView.reloadRows(at: [selectedIndexPath], with: .none)
-            } else {
-                // そうでない場合（新規登録の場合）新しくデータと行を追加
-                let newIndexPath = IndexPath(row: items.count, section: 0)
-                items.append(item)
-                //currentItems = items
-                tableView.insertRows(at: [newIndexPath], with: .automatic)
+            let item = Item()
+            item.registrationTime = sourceViewController.registrationTimeText.text!
+            item.photoImage = (sourceViewController.photoImage.image?.pngData()!)!
+            item.name = sourceViewController.nameText.text!
+            item.price = sourceViewController.priceText.text!
+            item.impression = sourceViewController.impressionText.text
+            item.rating = sourceViewController.ratingCount.rating
+            
+            // すでにIDがある時はそれを代入。ないときは一意の文字列を取得。
+            item.id = sourceViewController.item?.id ?? NSUUID().uuidString
+            
+            // Realm更新。
+            try! realm.write {
+                realm.add(item, update: .modified) // .modified: IDがない時は追加。ある時は更新。
             }
         }
     
     }
-    */
+    
     
 }

@@ -10,6 +10,7 @@ import RealmSwift
 
 class Item: Object {
     
+    @objc dynamic var id: String?
     @objc dynamic var registrationTime = ""
     @objc dynamic var photoImage = Data()
     @objc dynamic var name = ""
@@ -17,18 +18,8 @@ class Item: Object {
     @objc dynamic var impression = ""
     @objc dynamic var rating = 0
     
-    
-    /*
-    struct PropertyKey {
-        static let registrationTime = "registrationTime"
-        static let photoImage = "photoImage"
-        static let name = "name"
-        static let price = "price"
-        static let impression = "impression"
-        static let rating = "rating"
+    override static func primaryKey() -> String? {
+        return "id"
     }
-     */
-    
-    
 }
 
