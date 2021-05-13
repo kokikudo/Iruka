@@ -299,7 +299,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="hOM-rd-cpW">
                             <connections>
-                                <action selector="saveRealm:" destination="Tf5-F8-NQo" id="vNB-uG-Ch1"/>
+                                <segue destination="WLc-3b-F6L" kind="unwind" unwindAction="unwindToItemListWithSender:" id="fbK-ke-rh1"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -318,11 +318,12 @@
                         <outlet property="ratingLabel" destination="zR1-xe-vOq" id="iZT-ep-mEe"/>
                         <outlet property="registrationTimeLabel" destination="dbV-V0-5I5" id="EOh-hq-2ey"/>
                         <outlet property="registrationTimeText" destination="BXr-Q7-itK" id="Cg2-yJ-7cs"/>
-                        <outlet property="saveButton" destination="hOM-rd-cpW" id="gy3-9K-yy9"/>
+                        <outlet property="saveButton" destination="hOM-rd-cpW" id="RmU-Da-u9r"/>
                         <outlet property="wordCountLabel" destination="nMy-4n-aZB" id="tz6-4Z-ObD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ks6-Ef-dtK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="WLc-3b-F6L" userLabel="Exit" sceneMemberID="exit"/>
                 <tapGestureRecognizer id="3sy-WS-dbt">
                     <connections>
                         <action selector="selectImage:" destination="Tf5-F8-NQo" id="HSD-N5-udG"/>

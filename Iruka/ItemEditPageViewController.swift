@@ -70,11 +70,14 @@ class ItemEditPageViewController: UIViewController, UIImagePickerControllerDeleg
         
         // セルから移動してきた場合は商品の情報を反映しスイッチを表示、そうでなければ現在日時を取得しスイッチ非表示
         if let item = item {
-            //photoImage.image = item.photoImage
+            photoImage.image = UIImage(data: item.photoImage)
             registrationTimeText.text = item.registrationTime
             nameText.text = item.name
+            showStringLength(text: nameText!)
             priceText.text = item.price
             impressionText.text = item.impression
+            impressionText.textColor = UIColor.black
+            showStringLength(text: impressionText!)
             ratingCount.rating = item.rating
             changeButton.isHidden = true
         } else {
@@ -184,47 +187,7 @@ class ItemEditPageViewController: UIViewController, UIImagePickerControllerDeleg
             impressionText.text?.isEmpty == false &&
             ratingCount.rating > 0
     }
-    
-    @IBAction func saveRealm(_ sender: Any) {
         
-        /* 保存確認のアラート表示
-        let alertController = UIAlertController(title: "確認", message: "登録してもよろしいですか？", preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "はい", style: .default) { (action) in
-            
-            // 新しい商品をインスタンス化
-            let photo = self.photoImage.image
-            let registrationTime = self.registrationTimeText.text
-            let name = self.nameText.text
-            let price = self.priceText.text
-            let impression = self.impressionText.text
-            let rating = self.ratingCount.rating
-            
-            self.item = Item(registrationTime: registrationTime!, photoImage: photo, name: name!, price: price!, impression: impression!, rating: rating)
-        }
-        let noAction = UIAlertAction(title: "いいえ(編集に戻る)", style: .default) { (action) in }
-        
-        alertController.addAction(okAction)
-        alertController.addAction(noAction)
-        
-        present(alertController, animated: true, completion: nil)
-        */
-        
-        let item = Item()
-        item.registrationTime = registrationTimeText.text!
-        item.photoImage = (photoImage.image?.pngData())!
-        item.name = nameText.text!
-        item.price = priceText.text!
-        item.impression = impressionText.text
-        item.rating = ratingCount.rating
-        
-        try! realm.write {
-            realm.add(item)
-        }
-        
-        // この画面をスタックから外し前の画面に戻る。
-        self.dismiss(animated: true, completion: nil)
-    }
-
     // キャンセルボタンの挙動。新規登録と既存の編集で処理を変える
     @IBAction func cancel(_ sender: UIBarButtonItem) {
         
@@ -240,6 +203,16 @@ class ItemEditPageViewController: UIViewController, UIImagePickerControllerDeleg
         }
     }
 
+    func showStringLength(text: Any) {
+        switch text {
+        case is UITextView:
+            impressionWordCountLabel.text = "( \(impressionText.text!.count) / \(impressionMaxCount) )"
+        case is UITextField:
+            wordCountLabel.text = "( \(nameText.text!.count) / \(itemNameTextMaxCount) )"
+        default:
+            print("該当しない型が選択されました。")
+        }
+    }
 }
 
 extension Notification.Name {
@@ -279,7 +252,7 @@ extension ItemEditPageViewController: UITextFieldDelegate {
     // 文字数制限
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         // 商品名のみに文字数制限
-        if textField == nameText {
+        if textField === nameText {
             // 入力を反映したテキストを取得
             let resultText: String = (textField.text! as NSString).replacingCharacters(in: range, with: string)
             return resultText.count <= itemNameTextMaxCount
@@ -290,13 +263,10 @@ extension ItemEditPageViewController: UITextFieldDelegate {
     
     // 現在の文字数表示
     func textFieldDidChangeSelection(_ textField: UITextField) {
-        if textField == nameText {
-            wordCountLabel.text = "( \(textField.text!.count) / \(itemNameTextMaxCount) )"
-        }
+        showStringLength(text: textField)
     }
     
 }
-
 // textView(感想入力欄)のデリゲートとその他のメソッド
 extension ItemEditPageViewController: UITextViewDelegate {
     
@@ -314,7 +284,7 @@ extension ItemEditPageViewController: UITextViewDelegate {
     
     // 現在の文字数表示
     func textViewDidChange(_ textView: UITextView) {
-        impressionWordCountLabel.text = "( \(textView.text!.count) / \(impressionMaxCount) )"
+        showStringLength(text: textView)
     }
     
     // プレースホルダー
