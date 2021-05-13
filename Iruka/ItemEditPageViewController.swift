@@ -208,12 +208,10 @@ class ItemEditPageViewController: UIViewController, UIImagePickerControllerDeleg
         
         present(alertController, animated: true, completion: nil)
         */
-    
-        
-        //let item = Item(registrationTime: registrationTimeText.text!, name: nameText.text!, price: priceText.text!, impression: impressionText.text, rating: ratingCount.rating)
         
         let item = Item()
         item.registrationTime = registrationTimeText.text!
+        item.photoImage = (photoImage.image?.pngData())!
         item.name = nameText.text!
         item.price = priceText.text!
         item.impression = impressionText.text

@@ -54,7 +54,7 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
         }
         let item = self.itemList[indexPath.row]
         cell.registrationTimeText.text = item.registrationTime
-        //cell.photoImage.image = item.photoImage
+        cell.photoImage.image = UIImage(data: item.photoImage)
         cell.itemNameText.text = item.name
         return cell
     }

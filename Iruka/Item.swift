@@ -10,12 +10,12 @@ import RealmSwift
 
 class Item: Object {
     
-    @objc dynamic var registrationTime: String = ""
-    //@objc dynamic var photoImage: UIImage
-    @objc dynamic var name: String = ""
-    @objc dynamic var price: String = ""
-    @objc dynamic var impression: String = ""
-    @objc dynamic var rating: Int = 0
+    @objc dynamic var registrationTime = ""
+    @objc dynamic var photoImage = Data()
+    @objc dynamic var name = ""
+    @objc dynamic var price = ""
+    @objc dynamic var impression = ""
+    @objc dynamic var rating = 0
     
     
     /*
@@ -29,17 +29,6 @@ class Item: Object {
     }
      */
     
-    /*
-    init(registrationTime: String, name: String, price: String, impression: String, rating: Int) {
-        
-        self.registrationTime = registrationTime
-        self.photoImage = photoImage
-        self.name = name
-        self.price = price
-        self.impression = impression
-        self.rating = rating
-    }
-    */
     
 }
 
