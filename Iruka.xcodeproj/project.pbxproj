@@ -651,7 +651,7 @@
 		};
 		FD629D9E262133B9004948F8 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 10BEDC5BCF52AD6BEB8DD3FB /* Pods-IrukaTests.debug.xcconfig */;
+			baseConfigurationReference = 5E5A3ADE19C467940FFE9C96 /* Pods-Iruka.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -674,7 +674,7 @@
 		};
 		FD629D9F262133B9004948F8 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A5D63A295330B06AC919FAB5 /* Pods-IrukaTests.release.xcconfig */;
+			baseConfigurationReference = 139D4C7AB833FEDD03EB8921 /* Pods-Iruka.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -697,7 +697,7 @@
 		};
 		FD629DA1262133B9004948F8 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 44992384E811E22FD7DA7B44 /* Pods-Iruka-IrukaUITests.debug.xcconfig */;
+			baseConfigurationReference = 5E5A3ADE19C467940FFE9C96 /* Pods-Iruka.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -718,7 +718,7 @@
 		};
 		FD629DA2262133B9004948F8 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2201D48EC33A17A0C2253C56 /* Pods-Iruka-IrukaUITests.release.xcconfig */;
+			baseConfigurationReference = 139D4C7AB833FEDD03EB8921 /* Pods-Iruka.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
