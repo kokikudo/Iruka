@@ -70,7 +70,7 @@ class ItemEditPageViewController: UIViewController, UIImagePickerControllerDeleg
         
         // セルから移動してきた場合は商品の情報を反映しスイッチを表示、そうでなければ現在日時を取得しスイッチ非表示
         if let item = item {
-            photoImage.image = item.photoImage
+            //photoImage.image = item.photoImage
             registrationTimeText.text = item.registrationTime
             nameText.text = item.name
             priceText.text = item.price
@@ -90,6 +90,11 @@ class ItemEditPageViewController: UIViewController, UIImagePickerControllerDeleg
         
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        presentingViewController?.beginAppearanceTransition(true, animated: animated)
+    }
     
     func downKeyboardInTap() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
@@ -204,14 +209,22 @@ class ItemEditPageViewController: UIViewController, UIImagePickerControllerDeleg
         present(alertController, animated: true, completion: nil)
         */
     
-        let item = Item(registrationTime: registrationTimeText.text!, photoImage: photoImage.image!, name: nameText.text!, price: priceText.text!, impression: impressionText.text, rating: ratingCount.rating)
+        
+        //let item = Item(registrationTime: registrationTimeText.text!, name: nameText.text!, price: priceText.text!, impression: impressionText.text, rating: ratingCount.rating)
+        
+        let item = Item()
+        item.registrationTime = registrationTimeText.text!
+        item.name = nameText.text!
+        item.price = priceText.text!
+        item.impression = impressionText.text
+        item.rating = ratingCount.rating
         
         try! realm.write {
             realm.add(item)
         }
         
         // この画面をスタックから外し前の画面に戻る。
-        self.navigationController?.popViewController(animated: true)
+        self.dismiss(animated: true, completion: nil)
     }
 
     // キャンセルボタンの挙動。新規登録と既存の編集で処理を変える

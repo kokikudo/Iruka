@@ -54,7 +54,7 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
         }
         let item = self.itemList[indexPath.row]
         cell.registrationTimeText.text = item.registrationTime
-        cell.photoImage.image = item.photoImage
+        //cell.photoImage.image = item.photoImage
         cell.itemNameText.text = item.name
         return cell
     }
@@ -63,7 +63,7 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
         return true
     }
     
-    /*
+    
     // スワイプするとデータが削除できる
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         
@@ -73,7 +73,6 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
         
         self.itemTableView.deleteRows(at: [indexPath], with: .automatic)
     }
-    */
     
     
     // private mathod
