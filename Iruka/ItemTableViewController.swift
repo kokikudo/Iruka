@@ -129,6 +129,7 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
             item.price = sourceViewController.priceText.text!
             item.impression = sourceViewController.impressionText.text
             item.rating = sourceViewController.ratingCount.rating
+            item.isReEvaluation = sourceViewController.isReEvaluation
             
             // すでにIDがある時はそれを代入。ないときは一意の文字列を取得。
             item.id = sourceViewController.item?.id ?? NSUUID().uuidString
