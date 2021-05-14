@@ -17,6 +17,7 @@ class Item: Object {
     @objc dynamic var price = ""
     @objc dynamic var impression = ""
     @objc dynamic var rating = 0
+    @objc dynamic var isReEvaluation = false
     
     override static func primaryKey() -> String? {
         return "id"

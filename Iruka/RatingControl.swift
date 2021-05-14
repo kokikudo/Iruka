@@ -10,7 +10,7 @@ import UIKit
 @IBDesignable class RatingControl: UIStackView {
     
     //MARK: Propaties
-    private var ratingButtons = [UIButton]() // 評価の星。5つあるためリストで格納
+    var ratingButtons = [UIButton]() // 評価の星。5つあるためリストで格納
     var rating = 0 { // 星の数。更新時に設定値より下の配列の星をセレクト状態にする関数を実行
         didSet {
             updateButtonSelectionStates()
@@ -102,7 +102,6 @@ import UIKit
             addArrangedSubview(button) //　設定したボタンを追加
             ratingButtons.append(button) // プロパティにも追加
         }
-        //updateButtonSelectionStates() // タップした星より左にある星をセレクト状態
     }
     
     // タップされたボタンより左のボタンを全てセレクト状態にする

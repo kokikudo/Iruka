@@ -27,15 +27,16 @@ class ItemEditPageViewController: UIViewController, UIImagePickerControllerDeleg
     @IBOutlet weak var impressionText: UITextView!
     @IBOutlet weak var impressionWordCountLabel: UILabel!
     private let impressionMaxCount = 150
+    private let impressionPlaceHolderText = "(150文字まで)"
     @IBOutlet weak var ratingCount: RatingControl!
     
     var item: Item?
     var realm = try! Realm()
     
     
-    private var isReEvaluation = false
-    private var impressionDict: Dictionary<String, String> = ["before": "", "after": ""]
-    private var ratingDict: Dictionary<String, Int> = ["before": 0, "after": 0]
+    var isReEvaluation = false
+    private var impressionDict: Dictionary<String, String> = ["before": "before", "after": ""]
+    private var ratingDict: Dictionary<String, Int> = ["before": 1, "after": 0]
     
     
     override func viewDidLoad() {
@@ -47,39 +48,54 @@ class ItemEditPageViewController: UIViewController, UIImagePickerControllerDeleg
         
         // 何もないところをタップでキーボードを下げる
         downKeyboardInTap()
-        // 保存ボタンの初期値はfalse。必須項目入力後にtrue
-        saveButton.isEnabled = false
         
-        // 保存ボタンの有効無効の判断をするメソッドを実行させるための通知を登録
-        // キーボードが閉じた時に通知
+        /* 保存ボタン
+         保存ボタンの有効無効の判断をするメソッドを実行させるための通知を登録
+         キーボードが閉じた or 評価点が変更された　で通知を飛ばす
+        */
+        saveButton.isEnabled = false
         NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification,
                                                object: nil,
                                                queue: nil,
                                                using: didchangeNotfication(notification:))
-        // 評価が変更されたら通知
         NotificationCenter.default.addObserver(forName: .changeRatingNotification,
                                                object: nil,
                                                queue: nil,
                                                using: didchangeNotfication(notification:))
         
+        // 変更ボタンを非表示
+        changeButton.isHidden = true
+        
         // 金額入力のキーボードにリターンキーを追加
         addReturnBotton()
         // 感想文のプレースホルダーの状態
-        impressionText.text = "(150文字まで)"
+        impressionText.text = impressionPlaceHolderText
         impressionText.textColor = UIColor.lightGray
         
         // セルから移動してきた場合は商品の情報を反映しスイッチを表示、そうでなければ現在日時を取得しスイッチ非表示
         if let item = item {
+            
             photoImage.image = UIImage(data: item.photoImage)
             registrationTimeText.text = item.registrationTime
             nameText.text = item.name
             showStringLength(text: nameText!)
             priceText.text = item.price
-            impressionText.text = item.impression
-            impressionText.textColor = UIColor.black
-            showStringLength(text: impressionText!)
-            ratingCount.rating = item.rating
-            changeButton.isHidden = true
+            
+            // 登録時の感想と評価点を各辞書に入れる
+            impressionDict["before"] = item.impression
+            ratingDict["before"] = item.rating
+            
+            // 一年後の評価時に評価後の情報がプロパティになり変更ボタンが表示される
+            if isReEvaluation {
+                //　評価時の感想と評価点を表示（初期値は何もない）
+                impressionText.text = impressionDict["after"]
+                ratingCount.rating = ratingDict["after"]!
+                changeButton.isHidden = false
+            } else {
+                impressionText.text = impressionDict["before"]
+                ratingCount.rating = ratingDict["before"]!
+            }
+            
         } else {
             // 現在日時を取得
             let datefomatter = DateFormatter()
@@ -87,10 +103,7 @@ class ItemEditPageViewController: UIViewController, UIImagePickerControllerDeleg
             datefomatter.timeStyle = .none
             datefomatter.locale = Locale(identifier: "ja_JP")
             registrationTimeText.text = datefomatter.string(from: Date())
-            changeButton.isHidden = true
         }
-        
-        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -185,6 +198,7 @@ class ItemEditPageViewController: UIViewController, UIImagePickerControllerDeleg
             nameText.text?.isEmpty == false &&
             priceText.text?.isEmpty == false &&
             impressionText.text?.isEmpty == false &&
+            impressionText.text != impressionPlaceHolderText &&
             ratingCount.rating > 0
     }
         
@@ -213,6 +227,24 @@ class ItemEditPageViewController: UIViewController, UIImagePickerControllerDeleg
             print("該当しない型が選択されました。")
         }
     }
+    
+    @IBAction func tapChangeButton(_ sender: UISwitch) {
+        
+        if sender.isOn {
+            self.impressionText.text = impressionDict["after"]
+            self.impressionText.isEditable = true
+            
+            self.ratingCount.isUserInteractionEnabled = true
+            self.ratingCount.rating = ratingDict["after"]!
+        } else {
+            self.impressionText.text = impressionDict["before"]
+            self.impressionText.isEditable = false
+            
+            self.ratingCount.rating = ratingDict["before"]!
+            self.ratingCount.isUserInteractionEnabled = false
+        }
+    }
+    
 }
 
 extension Notification.Name {
@@ -296,7 +328,7 @@ extension ItemEditPageViewController: UITextViewDelegate {
     }
     func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text.isEmpty {
-            textView.text = "(150文字まで)"
+            textView.text = impressionPlaceHolderText
             textView.textColor = UIColor.lightGray
         }
     }
