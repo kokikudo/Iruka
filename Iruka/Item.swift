@@ -24,3 +24,23 @@ class Item: Object {
     }
 }
 
+struct Implementor {
+    let realm = try! Realm()
+    let itemObject: Results<Item>
+    
+    init() {
+        itemObject = realm.objects(Item.self)
+    }
+    
+    func select() -> Results<Item> {
+        let dateBefore1Year = Calendar.current.date(byAdding: .day, value: -3, to: Date())!
+        
+        let datefomatter = DateFormatter()
+        datefomatter.dateStyle = .long
+        datefomatter.timeStyle = .none
+        datefomatter.locale = Locale(identifier: "ja_JP")
+        let formattedDateBefore1Year = datefomatter.string(from: dateBefore1Year)
+        let result = itemObject.filter("registrationTime == %@", formattedDateBefore1Year)
+        return result
+    }
+}

@@ -17,6 +17,7 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
     
     var itemList: Results<Item>!
     var realm = try! Realm()
+    var isTappedNotification = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,8 +28,16 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
         
         self.itemTableView.delegate = self
         self.itemTableView.dataSource = self
-        
         self.itemList = realm.objects(Item.self)
+        
+        // 通知から来た場合、一年前の商品のみリストアップ
+        if isTappedNotification {
+            let oneyearItems = Implementor()
+            let results = oneyearItems.select()
+            
+            self.itemList = results
+            itemTableView.reloadData()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -52,7 +61,9 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
         guard let cell = self.itemTableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? ItemTableViewCell else {
             fatalError("セルのダウンキャストに失敗しました")
         }
+        
         let item = self.itemList[indexPath.row]
+        
         cell.registrationTimeText.text = item.registrationTime
         cell.photoImage.image = UIImage(data: item.photoImage)
         cell.itemNameText.text = item.name
