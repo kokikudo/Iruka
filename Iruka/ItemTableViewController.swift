@@ -8,7 +8,7 @@
 import UIKit
 import RealmSwift
 
-class ItemTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate{
+class ItemTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
     
     @IBOutlet weak var search: UISearchBar!
     @IBOutlet var itemTableView: UITableView!
@@ -17,7 +17,7 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
     
     var itemList: Results<Item>!
     var realm = try! Realm()
-    var isTappedNotification = false
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,28 +26,15 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
         //search.enablesReturnKeyAutomatically = false
         //currentItems = items
         print(realm.configuration.fileURL!)
+        
+        
         self.itemTableView.delegate = self
         self.itemTableView.dataSource = self
         self.itemList = realm.objects(Item.self)
-        
-        // 通知から来た場合、一年前の商品のみリストアップ
-        if isTappedNotification {
-            let oneyearItems = Implementor()
-            let results = oneyearItems.select()
-            
-            self.itemList = results
-            itemTableView.reloadData()
-        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        
         self.itemTableView.reloadData()
-        
-        /* タップ状態を解除
-        if let indexPath = itemTableView.indexPathForSelectedRow {
-            itemTableView.deselectRow(at: indexPath, animated: true)
-        */
     }
     
     // MARK: - Table view data source
@@ -75,7 +62,7 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     
-    // スワイプするとデータが削除できる
+    // スワイプするとデータを削除できる
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         
         try! realm.write {
@@ -160,14 +147,13 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
     
     // ローカル通知
     private func setNotification(date: Date) {
-        
         // trigger
         let current = Calendar.current
         let year = current.component(.year, from: date)
         let month = current.component(.month, from: date)
         let day = current.component(.day, from: date)
+        let dateComp = DateComponents(year: year, month: month, day: day, hour: 16, minute: 23)
         
-        let dateComp = DateComponents(year: year, month: month, day: day, hour: 12, minute: 48)
         let trigger = UNCalendarNotificationTrigger(dateMatching: dateComp, repeats: false)
         
         // content
@@ -180,7 +166,7 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
         let request = UNNotificationRequest(identifier: "\(year)\(month)\(day)", content: content, trigger: trigger)
         
         // 通知を登録
-        // UNUserNotificationCenterにrequestをaddする。エラーの時はエラー分が返ってくる。
+        // UNUserNotificationCenterにrequestをaddする。エラーの時はエラー内容が返ってくる。
         let center = UNUserNotificationCenter.current()
         
         center.add(request) { (error) in
@@ -189,4 +175,33 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
             }
         }
     }
+    
+    /*
+    // 通知がタップされてアプリを開いたときにBool値をTrue
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        // 通知から来た場合、一年前の商品のみリストアップ
+        print("通知から来ますた")
+        let oneyearItems = Implementor()
+        let results = oneyearItems.select()
+        
+        self.itemList = results
+        itemTableView.reloadData()
+        
+        // 通知の情報を取得
+        let notification = response.notification
+
+        // リモート通知かローカル通知かを判別
+        if notification.request.trigger is UNPushNotificationTrigger {
+            print("didReceive Push Notification")
+        } else {
+            print("didReceive Local Notification")
+        }
+
+        // 通知の ID を取得
+        print("notification.request.identifier: \(notification.request.identifier)")
+
+        // 処理完了時に呼ぶ
+        completionHandler()
+    }
+    */
 }
