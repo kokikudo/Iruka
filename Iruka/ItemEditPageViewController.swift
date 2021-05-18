@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import RealmSwift
 
 class ItemEditPageViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
@@ -31,8 +30,6 @@ class ItemEditPageViewController: UIViewController, UIImagePickerControllerDeleg
     @IBOutlet weak var ratingCount: RatingControl!
     
     var item: Item?
-    var realm = try! Realm()
-    
     
     var isReEvaluation = false
     private var impressionDict: Dictionary<String, String> = ["before": "before", "after": ""]
@@ -41,7 +38,7 @@ class ItemEditPageViewController: UIViewController, UIImagePickerControllerDeleg
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         nameText.delegate = self
         priceText.delegate = self
         impressionText.delegate = self
@@ -97,12 +94,13 @@ class ItemEditPageViewController: UIViewController, UIImagePickerControllerDeleg
             }
             
         } else {
+            
             // 現在日時を取得
-            let datefomatter = DateFormatter()
-            datefomatter.dateStyle = .long
-            datefomatter.timeStyle = .none
-            datefomatter.locale = Locale(identifier: "ja_JP")
-            registrationTimeText.text = datefomatter.string(from: Date())
+            let dateformatter = DateFormatter()
+            dateformatter.dateStyle = .long
+            dateformatter.timeStyle = .none
+            //dateformatter.locale = Locale(identifier: "ja_JP") ローカライズ対応するなら不要
+            registrationTimeText.text = dateformatter.string(from: Date())
         }
     }
     

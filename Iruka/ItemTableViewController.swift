@@ -17,7 +17,7 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
     
     var itemList: Results<Item>!
     var realm = try! Realm()
-    var isTappedNotification = true
+    var isTappedNotification = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,7 +25,7 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
         //search.delegate = self
         //search.enablesReturnKeyAutomatically = false
         //currentItems = items
-        
+        print(realm.configuration.fileURL!)
         self.itemTableView.delegate = self
         self.itemTableView.dataSource = self
         self.itemList = realm.objects(Item.self)
@@ -114,11 +114,13 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
         case "AddItem":
             print("AddItemのsegueが実行されました。")
         case "EditItem":
+            // タップしたセルのインデックスパスを取得
             if let indexPath = self.itemTableView.indexPathForSelectedRow {
+                
+                // 遷移先のViewを特定しインスタンス化
                 guard let destnation = segue.destination as? ItemEditPageViewController else {
                     fatalError("ItemEditPageViewController への遷移に失敗しました。")
                 }
-                
                 destnation.item = self.itemList[indexPath.row]
             }
         default:
@@ -149,9 +151,42 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
             try! realm.write {
                 realm.add(item, update: .modified) // .modified: IDがない時は追加。ある時は更新。
             }
+            
+            // 通知登録
+            setNotification(date: item.date)
         }
     
     }
     
-    
+    // ローカル通知
+    private func setNotification(date: Date) {
+        
+        // trigger
+        let current = Calendar.current
+        let year = current.component(.year, from: date)
+        let month = current.component(.month, from: date)
+        let day = current.component(.day, from: date)
+        
+        let dateComp = DateComponents(year: year, month: month, day: day, hour: 12, minute: 48)
+        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComp, repeats: false)
+        
+        // content
+        let content = UNMutableNotificationContent()
+        content.title = "あれを買って1年経ちました...覚えてますか？"
+        content.body = "見返しましょう！"
+        content.sound = UNNotificationSound.default
+        
+        // contentとtriggerをもとに通知を作成
+        let request = UNNotificationRequest(identifier: "\(year)\(month)\(day)", content: content, trigger: trigger)
+        
+        // 通知を登録
+        // UNUserNotificationCenterにrequestをaddする。エラーの時はエラー分が返ってくる。
+        let center = UNUserNotificationCenter.current()
+        
+        center.add(request) { (error) in
+            if let error = error {
+                print("通知処理が失敗:\(error.localizedDescription)")
+            }
+        }
+    }
 }

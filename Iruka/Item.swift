@@ -12,6 +12,7 @@ class Item: Object {
     
     @objc dynamic var id: String?
     @objc dynamic var registrationTime = ""
+    @objc dynamic var date = Date()
     @objc dynamic var photoImage = Data()
     @objc dynamic var name = ""
     @objc dynamic var price = ""
