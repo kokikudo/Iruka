@@ -33,7 +33,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-        print("nnnnnnnn")
+        
+        print("通知がタップされました。")
+        let oneYearAgoRegistereditem = Implementor()
+        let results = oneYearAgoRegistereditem.select()
+        
+        let tableViewController = ItemTableViewController()
+        tableViewController.itemList = results
+        
+        print(tableViewController.itemList ?? "からのリスト")
+        
         completionHandler()
     }
     

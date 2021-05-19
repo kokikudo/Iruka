@@ -11,7 +11,6 @@ import RealmSwift
 class Item: Object {
     
     @objc dynamic var id: String?
-    @objc dynamic var registrationTime = ""
     @objc dynamic var date = Date()
     @objc dynamic var photoImage = Data()
     @objc dynamic var name = ""
@@ -34,7 +33,7 @@ struct Implementor {
     }
     
     func select() -> Results<Item> {
-        let dateBefore1Year = Calendar.current.date(byAdding: .day, value: -3, to: Date())!
+        let dateBefore1Year = Calendar.current.date(byAdding: .year, value: -1, to: Date())!
         
         let datefomatter = DateFormatter()
         datefomatter.dateStyle = .long

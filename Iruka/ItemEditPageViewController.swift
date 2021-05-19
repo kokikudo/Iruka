@@ -73,7 +73,7 @@ class ItemEditPageViewController: UIViewController, UIImagePickerControllerDeleg
         if let item = item {
             
             photoImage.image = UIImage(data: item.photoImage)
-            registrationTimeText.text = item.registrationTime
+            registrationTimeText.text = convertingDateTypeToString(date: item.date)
             nameText.text = item.name
             showStringLength(text: nameText!)
             priceText.text = item.price
@@ -96,11 +96,33 @@ class ItemEditPageViewController: UIViewController, UIImagePickerControllerDeleg
         } else {
             
             // 現在日時を取得
-            let dateformatter = DateFormatter()
-            dateformatter.dateStyle = .long
-            dateformatter.timeStyle = .none
-            //dateformatter.locale = Locale(identifier: "ja_JP") ローカライズ対応するなら不要
-            registrationTimeText.text = dateformatter.string(from: Date())
+            
+            
+            
+            // テスト用。一年前の商品がリストに表示されるか確認。
+            //let test = testSpecifyRegistrationTime(year: 2020, month: 5, day: 19)
+            registrationTimeText.text = convertingDateTypeToString(date: Date())
+        }
+    }
+    
+    private func convertingDateTypeToString(date: Date) -> String {
+        let dateformatter = DateFormatter()
+        dateformatter.dateStyle = .long
+        dateformatter.timeStyle = .none
+        //dateformatter.locale = Locale(identifier: "ja_JP") ローカライズ対応するなら不要
+        
+        let stringDate = dateformatter.string(from: date)
+        return stringDate
+    }
+    
+    // テスト用関数。登録日時を指定する
+    func testSpecifyRegistrationTime(year: Int, month: Int, day: Int) -> Date {
+        
+        let calendar = Calendar(identifier: .gregorian)
+        if let date = calendar.date(from: DateComponents(year: year, month: month, day: day)) {
+            return date
+        } else {
+            fatalError("日付の指定でエラーが発生")
         }
     }
     

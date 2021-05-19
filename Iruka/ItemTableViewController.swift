@@ -51,7 +51,7 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
         
         let item = self.itemList[indexPath.row]
         
-        cell.registrationTimeText.text = item.registrationTime
+        cell.registrationTimeText.text = convertingDateTypeToString(date: item.date)
         cell.photoImage.image = UIImage(data: item.photoImage)
         cell.itemNameText.text = item.name
         return cell
@@ -123,7 +123,6 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
         if let sourceViewController = sender.source as? ItemEditPageViewController {
             
             let item = Item()
-            item.registrationTime = sourceViewController.registrationTimeText.text!
             item.photoImage = (sourceViewController.photoImage.image?.pngData()!)!
             item.name = sourceViewController.nameText.text!
             item.price = sourceViewController.priceText.text!
@@ -152,7 +151,7 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
         let year = current.component(.year, from: date)
         let month = current.component(.month, from: date)
         let day = current.component(.day, from: date)
-        let dateComp = DateComponents(year: year, month: month, day: day, hour: 16, minute: 23)
+        let dateComp = DateComponents(year: year + 1, month: month, day: day, hour: 11, minute: 15)
         
         let trigger = UNCalendarNotificationTrigger(dateMatching: dateComp, repeats: false)
         
@@ -174,6 +173,16 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
                 print("通知処理が失敗:\(error.localizedDescription)")
             }
         }
+    }
+    
+    private func convertingDateTypeToString(date: Date) -> String {
+        let dateformatter = DateFormatter()
+        dateformatter.dateStyle = .long
+        dateformatter.timeStyle = .none
+        //dateformatter.locale = Locale(identifier: "ja_JP") ローカライズ対応するなら不要
+        
+        let stringDate = dateformatter.string(from: date)
+        return stringDate
     }
     
     /*
