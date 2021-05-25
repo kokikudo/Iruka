@@ -12,8 +12,6 @@
 		FD461B60262D71AC00F736C6 /* ItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD461B5F262D71AB00F736C6 /* ItemTableViewCell.swift */; };
 		FD55ED86262816520074530B /* RatingControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD55ED85262816520074530B /* RatingControl.swift */; };
 		FD629D74262133B5004948F8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD629D73262133B5004948F8 /* AppDelegate.swift */; };
-		FD629D76262133B5004948F8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD629D75262133B5004948F8 /* SceneDelegate.swift */; };
-		FD629D78262133B5004948F8 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD629D77262133B5004948F8 /* HomeViewController.swift */; };
 		FD629D7B262133B5004948F8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD629D79262133B5004948F8 /* Main.storyboard */; };
 		FD629D7D262133B9004948F8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FD629D7C262133B9004948F8 /* Assets.xcassets */; };
 		FD629D80262133B9004948F8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD629D7E262133B9004948F8 /* LaunchScreen.storyboard */; };
@@ -54,8 +52,6 @@
 		FD55ED85262816520074530B /* RatingControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingControl.swift; sourceTree = "<group>"; };
 		FD629D70262133B5004948F8 /* Iruka.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Iruka.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD629D73262133B5004948F8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		FD629D75262133B5004948F8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		FD629D77262133B5004948F8 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		FD629D7A262133B5004948F8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		FD629D7C262133B9004948F8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FD629D7F262133B9004948F8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -146,13 +142,11 @@
 			children = (
 				FD648CB3263B019600F26AA2 /* Iruka.entitlements */,
 				FD629D73262133B5004948F8 /* AppDelegate.swift */,
-				FD629D75262133B5004948F8 /* SceneDelegate.swift */,
-				FD629D77262133B5004948F8 /* HomeViewController.swift */,
 				FD629D79262133B5004948F8 /* Main.storyboard */,
-				FD461B5F262D71AB00F736C6 /* ItemTableViewCell.swift */,
 				FD72EACC262C6232002D4C85 /* Item.swift */,
 				FD55ED85262816520074530B /* RatingControl.swift */,
 				FD62C86F2625787A000B277A /* ItemTableViewController.swift */,
+				FD461B5F262D71AB00F736C6 /* ItemTableViewCell.swift */,
 				FD62C86726256245000B277A /* ItemEditPageViewController.swift */,
 				FD629D7C262133B9004948F8 /* Assets.xcassets */,
 				FD629D7E262133B9004948F8 /* LaunchScreen.storyboard */,
@@ -359,10 +353,8 @@
 				FD62C86826256245000B277A /* ItemEditPageViewController.swift in Sources */,
 				FD461B60262D71AC00F736C6 /* ItemTableViewCell.swift in Sources */,
 				FD62C8702625787A000B277A /* ItemTableViewController.swift in Sources */,
-				FD629D78262133B5004948F8 /* HomeViewController.swift in Sources */,
 				FD629D74262133B5004948F8 /* AppDelegate.swift in Sources */,
 				FD55ED86262816520074530B /* RatingControl.swift in Sources */,
-				FD629D76262133B5004948F8 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -542,7 +534,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Iruka/Iruka.entitlements;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = S3ZNGP43TF;
 				INFOPLIST_FILE = Iruka/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -551,6 +544,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = kokikudo.first.app.Iruka;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "TestPushApp Provisioning Profiles";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -563,7 +557,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Iruka/Iruka.entitlements;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = S3ZNGP43TF;
 				INFOPLIST_FILE = Iruka/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -572,6 +567,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = kokikudo.first.app.Iruka;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "TestPushApp Provisioning Profiles";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
