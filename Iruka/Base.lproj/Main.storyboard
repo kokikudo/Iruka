@@ -74,11 +74,18 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="home" id="18A-k5-bQg">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="Z4e-58-mnm">
-                            <connections>
-                                <segue destination="0md-HU-D3N" kind="presentation" identifier="AddItem" id="uUH-eR-xgh"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="add" id="Z4e-58-mnm">
+                                <connections>
+                                    <segue destination="0md-HU-D3N" kind="presentation" identifier="AddItem" id="uUH-eR-xgh"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem systemItem="search" id="cfl-xa-hjM">
+                                <connections>
+                                    <action selector="searchBar:" destination="XGR-zs-e48" id="yii-LX-pHa"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="itemTableView" destination="KNq-5G-VZO" id="dZ3-zh-UFl"/>
