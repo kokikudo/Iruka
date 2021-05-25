@@ -31,21 +31,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         return true
     }
-    
-    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-        
-        print("通知がタップされました。")
-        let oneYearAgoRegistereditem = Implementor()
-        let results = oneYearAgoRegistereditem.select()
-        
-        let tableViewController = ItemTableViewController()
-        tableViewController.itemList = results
-        
-        print(tableViewController.itemList ?? "からのリスト")
-        
-        completionHandler()
-    }
-    
     // SceneDelegateを使わないため関連するメソッドを削除
 }
 

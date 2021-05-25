@@ -27,10 +27,9 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
         //currentItems = items
         print(realm.configuration.fileURL!)
         
-        
         self.itemTableView.delegate = self
         self.itemTableView.dataSource = self
-        self.itemList = realm.objects(Item.self)
+        self.itemList = confirmEvaluationTargetItem()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -38,7 +37,7 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     // MARK: - Table view data source
-
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.itemList.count
     }
@@ -51,7 +50,7 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
         
         let item = self.itemList[indexPath.row]
         
-        cell.registrationTimeText.text = convertingDateTypeToString(date: item.date)
+        cell.registrationTimeText.text = item.date
         cell.photoImage.image = UIImage(data: item.photoImage)
         cell.itemNameText.text = item.name
         return cell
@@ -76,23 +75,23 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
     // private mathod
     
     /* 検索処理
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        guard !searchText.isEmpty else {
-            currentItems = items
-            tableView.reloadData()
-            return
-        }
-        currentItems = items.filter({ item -> Bool in
-            item.name.lowercased().contains(searchText.lowercased())
-        })
-        tableView.reloadData()
-    }
-    // 検索ボタンをタップしたらキーボードが下がる
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.resignFirstResponder()
-    }
-    */
-
+     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+     guard !searchText.isEmpty else {
+     currentItems = items
+     tableView.reloadData()
+     return
+     }
+     currentItems = items.filter({ item -> Bool in
+     item.name.lowercased().contains(searchText.lowercased())
+     })
+     tableView.reloadData()
+     }
+     // 検索ボタンをタップしたらキーボードが下がる
+     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+     searchBar.resignFirstResponder()
+     }
+     */
+    
     // セルをタップしたらその商品の編集画面に移動
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: sender)
@@ -124,6 +123,8 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
             
             let item = Item()
             item.photoImage = (sourceViewController.photoImage.image?.pngData()!)!
+            item.date = sourceViewController.registrationTimeText.text!
+            item.dateSecond = Item.convertDateIntoDouble(date: sourceViewController.registrationDay)
             item.name = sourceViewController.nameText.text!
             item.price = sourceViewController.priceText.text!
             item.impression = sourceViewController.impressionText.text
@@ -137,11 +138,10 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
             try! realm.write {
                 realm.add(item, update: .modified) // .modified: IDがない時は追加。ある時は更新。
             }
-            
             // 通知登録
-            setNotification(date: item.date)
+            setNotification(date: sourceViewController.registrationDay)
         }
-    
+        
     }
     
     // ローカル通知
@@ -151,7 +151,7 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
         let year = current.component(.year, from: date)
         let month = current.component(.month, from: date)
         let day = current.component(.day, from: date)
-        let dateComp = DateComponents(year: year + 1, month: month, day: day, hour: 11, minute: 15)
+        let dateComp = DateComponents(year: year, month: month, day: day, hour: 13, minute: 47)
         
         let trigger = UNCalendarNotificationTrigger(dateMatching: dateComp, repeats: false)
         
@@ -175,42 +175,33 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
         }
     }
     
-    private func convertingDateTypeToString(date: Date) -> String {
-        let dateformatter = DateFormatter()
-        dateformatter.dateStyle = .long
-        dateformatter.timeStyle = .none
-        //dateformatter.locale = Locale(identifier: "ja_JP") ローカライズ対応するなら不要
+    // アプリ起動時に実行。評価対象商品があるか確認、あればアラート。
+    func confirmEvaluationTargetItem() -> Results<Item> {
+        let realm = try! Realm()
+        var itemObject: Results<Item> = realm.objects(Item.self)
         
-        let stringDate = dateformatter.string(from: date)
-        return stringDate
+        let result = select(items: itemObject)
+        
+        if result.count > 0 {
+            // アラート
+            let alertController = UIAlertController(title: "テスト", message: "評価対象商品: \(result.count)", preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+            alertController.addAction(okAction)
+            present(alertController, animated: true, completion: nil)
+            
+            itemObject = result
+            return itemObject
+        } else {
+            print("対象商品はありません")
+            return itemObject
+        }
     }
     
-    /*
-    // 通知がタップされてアプリを開いたときにBool値をTrue
-    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-        // 通知から来た場合、一年前の商品のみリストアップ
-        print("通知から来ますた")
-        let oneyearItems = Implementor()
-        let results = oneyearItems.select()
+    func select(items: Results<Item>) -> Results<Item> {
+        let dateBefore1Year = Calendar.current.date(byAdding: .year, value: -1, to: Date())!
+        let convertedDB1Y = Item.convertDateIntoDouble(date: dateBefore1Year)
         
-        self.itemList = results
-        itemTableView.reloadData()
-        
-        // 通知の情報を取得
-        let notification = response.notification
-
-        // リモート通知かローカル通知かを判別
-        if notification.request.trigger is UNPushNotificationTrigger {
-            print("didReceive Push Notification")
-        } else {
-            print("didReceive Local Notification")
-        }
-
-        // 通知の ID を取得
-        print("notification.request.identifier: \(notification.request.identifier)")
-
-        // 処理完了時に呼ぶ
-        completionHandler()
+        let result = items.filter("dateSecond <= %@", convertedDB1Y).filter("isReEvaluation == %@", false)
+        return result
     }
-    */
 }
