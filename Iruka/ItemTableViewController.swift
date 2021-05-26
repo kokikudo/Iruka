@@ -37,10 +37,6 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
         setupSearchController()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        self.itemTableView.reloadData()
-    }
-    
     // MARK: - Table view data source
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -149,10 +145,19 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
             item.dateSecond = Item.convertDateIntoDouble(date: sourceViewController.registrationDay)
             item.name = sourceViewController.nameText.text!
             item.price = sourceViewController.priceText.text!
-            item.impression = sourceViewController.impressionText.text
-            item.rating = sourceViewController.ratingCount.rating
-            item.isReEvaluation = sourceViewController.isReEvaluation
             
+            item.isReEvaluation = sourceViewController.isReEvaluation
+            if item.isReEvaluation {
+                item.beforeImpression = sourceViewController.beforeImpression
+                item.beforeRating = sourceViewController.beforeRating
+                item.afterImpression = sourceViewController.impressionText.text!
+                item.afterRating = sourceViewController.ratingCount.rating
+            } else {
+                item.beforeImpression = sourceViewController.impressionText.text!
+                item.beforeRating = sourceViewController.ratingCount.rating
+                item.afterImpression = sourceViewController.afterImpression
+                item.afterRating = sourceViewController.afterRating
+            }
             // すでにIDがある時はそれを代入。ないときは一意の文字列を取得。
             item.id = sourceViewController.item?.id ?? NSUUID().uuidString
             
