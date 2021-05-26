@@ -201,11 +201,13 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
         }
     }
     
-    // アプリ起動時に実行。評価対象商品があるか確認、あればアラート。
+    // アプリ起動時に実行。評価対象商品があれば表示リストに適用。
     func confirmEvaluationTargetItem() -> Results<Item> {
         
+        // 評価対象の絞り込み
         let result = select(items: allList)
         
+        // あればアラート
         if result.count > 0 {
             // アラート
             let alertController = UIAlertController(title: "テスト", message: "評価対象商品: \(result.count)", preferredStyle: .alert)
@@ -219,13 +221,24 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
         
         return result
     }
-    
+    // 2つの条件を満たした商品を絞り込む(去年以前であること、評価が終わってないこと)
     func select(items: Results<Item>) -> Results<Item> {
+        
+        // 去年の日付を算出し、秒数に変換
         let dateBefore1Year = Calendar.current.date(byAdding: .year, value: -1, to: Date())!
         let convertedDB1Y = Item.convertDateIntoDouble(date: dateBefore1Year)
         print("今日の日付：\(Item.convertDateIntoDouble(date: Date()))")
         print("去年の日付：\(convertedDB1Y)")
-        let result = items.filter("dateSecond <= %@", convertedDB1Y).filter("isReEvaluation == %@", false)
+        
+        // 条件を指定し検索
+        let result = items.filter("dateSecond <= %@", convertedDB1Y).filter("isReEvaluation == NO")
+        
+        // 評価が終わったという処理をここで行う
+        for a in result {
+            try! realm.write {
+                a.isReEvaluation = true
+            }
+        }
         return result
     }
 }

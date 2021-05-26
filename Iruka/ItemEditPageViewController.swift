@@ -78,6 +78,7 @@ class ItemEditPageViewController: UIViewController, UIImagePickerControllerDeleg
             nameText.text = item.name
             showStringLength(text: nameText!)
             priceText.text = item.price
+            isReEvaluation = item.isReEvaluation
             
             // 登録時の感想と評価点を各辞書に入れる
             impressionDict["before"] = item.impression
