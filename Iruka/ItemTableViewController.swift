@@ -8,28 +8,25 @@
 import UIKit
 import RealmSwift
 
-class ItemTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating {
+class ItemTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
     
-    @IBOutlet weak var search: UISearchBar!
+    // outlets
     @IBOutlet var itemTableView: UITableView!
     
-    // itemList
+    // 商品リスト: showList()でその都度表示するリストを変える
     private var allList: Results<Item>!
     private var needToBeEvaluatedList: Results<Item>!
     private var searchedList: Results<Item>!
     
+    // 検索機能のコントローラー: アプリ起動時にセットアップする
     private var searchController: UISearchController!
     
+    // Realmオブジェクト
     private var realm = try! Realm()
-    
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //search.delegate = self
-        //search.enablesReturnKeyAutomatically = false
-        //currentItems = items
         print(realm.configuration.fileURL!)
         
         self.itemTableView.delegate = self
@@ -74,7 +71,7 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         
         try! realm.write {
-            realm.delete(allList[indexPath.row])
+            realm.delete(showList()[indexPath.row])
         }
         
         self.itemTableView.deleteRows(at: [indexPath], with: .automatic)
@@ -84,10 +81,9 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
     private func setupSearchController() {
         searchController = UISearchController(searchResultsController: nil)
         searchController.hidesNavigationBarDuringPresentation = true
-        searchController.searchResultsUpdater = self
         searchController.searchBar.placeholder = "名前で検索します"
         
-        self.searchController.searchBar.delegate = self
+        searchController.searchBar.delegate = self
     }
     
     // private mathod
@@ -95,35 +91,17 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
         present(searchController, animated: true, completion: nil)
     }
     
-    func updateSearchResults(for searchController: UISearchController) {
-        let inputText = searchController.searchBar.text ?? ""
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        let inputText = searchBar.text ?? ""
         if inputText.isEmpty {
             searchedList = needToBeEvaluatedList
         } else {
-            searchedList = needToBeEvaluatedList.filter("name == %@", inputText)
+            searchedList = needToBeEvaluatedList.filter("name CONTAINS %@", inputText)
         }
         
-        searchController.resignFirstResponder()
         itemTableView.reloadData()
+        searchController.isActive = false
     }
-    
-    /* 検索処理
-     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-     guard !searchText.isEmpty else {
-     currentItems = items
-     tableView.reloadData()
-     return
-     }
-     currentItems = items.filter({ item -> Bool in
-     item.name.lowercased().contains(searchText.lowercased())
-     })
-     tableView.reloadData()
-     }
-     // 検索ボタンをタップしたらキーボードが下がる
-     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-     searchBar.resignFirstResponder()
-     }
-     */
     
     // 表示する商品のリストを都度変更する
     private func showList() -> Results<Item> {
@@ -145,13 +123,13 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
             print("AddItemのsegueが実行されました。")
         case "EditItem":
             // タップしたセルのインデックスパスを取得
-            if let indexPath = self.itemTableView.indexPathForSelectedRow {
+            if let indexPath = itemTableView.indexPathForSelectedRow {
                 
                 // 遷移先のViewを特定しインスタンス化
                 guard let destnation = segue.destination as? ItemEditPageViewController else {
                     fatalError("ItemEditPageViewController への遷移に失敗しました。")
                 }
-                destnation.item = self.allList[indexPath.row]
+                destnation.item = showList()[indexPath.row]
             }
         default:
             fatalError("segueのIDが一致しませんでした。")
@@ -182,6 +160,10 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
             try! realm.write {
                 realm.add(item, update: .modified) // .modified: IDがない時は追加。ある時は更新。
             }
+            
+            // テーブルビューのリロード
+            itemTableView.reloadData()
+            
             // 通知登録
             setNotification(date: sourceViewController.registrationDay)
         }
@@ -241,7 +223,8 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
     func select(items: Results<Item>) -> Results<Item> {
         let dateBefore1Year = Calendar.current.date(byAdding: .year, value: -1, to: Date())!
         let convertedDB1Y = Item.convertDateIntoDouble(date: dateBefore1Year)
-        
+        print("今日の日付：\(Item.convertDateIntoDouble(date: Date()))")
+        print("去年の日付：\(convertedDB1Y)")
         let result = items.filter("dateSecond <= %@", convertedDB1Y).filter("isReEvaluation == %@", false)
         return result
     }
