@@ -106,9 +106,9 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         let inputText = searchBar.text ?? ""
         if inputText.isEmpty {
-            searchedList = needToBeEvaluatedList
+            showList = allList
         } else {
-            searchedList = needToBeEvaluatedList.filter("name CONTAINS %@", inputText)
+            showList = allList.filter("name CONTAINS %@", inputText)
         }
         
         itemTableView.reloadData()
