@@ -32,10 +32,14 @@ class ItemEditPageViewController: UIViewController, UIImagePickerControllerDeleg
     var item: Item?
     
     let registrationDay = Date()
-    var isReEvaluation = false
-    private var impressionDict: Dictionary<String, String> = ["before": "before", "after": ""]
-    private var ratingDict: Dictionary<String, Int> = ["before": 1, "after": 0]
+    var isReEvaluation = false   // 評価対象の商品の場合とそうでない場合で処理を変える
+    var beforeImpression = ""
+    var afterImpression = ""
+    var beforeRating = 0
+    var afterRating = 0
     
+    // test date
+    let testDate = Item.createDateObject(year: 2020, month: 4, day: 20)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,6 +50,7 @@ class ItemEditPageViewController: UIViewController, UIImagePickerControllerDeleg
         
         // 何もないところをタップでキーボードを下げる
         downKeyboardInTap()
+        
         
         /* 保存ボタン
          保存ボタンの有効無効の判断をするメソッドを実行させるための通知を登録
@@ -61,14 +66,13 @@ class ItemEditPageViewController: UIViewController, UIImagePickerControllerDeleg
                                                queue: nil,
                                                using: didchangeNotfication(notification:))
         
-        // 変更ボタンを非表示
-        changeButton.isHidden = true
-        
         // 金額入力のキーボードにリターンキーを追加
         addReturnBotton()
         // 感想文のプレースホルダーの状態
         impressionText.text = impressionPlaceHolderText
         impressionText.textColor = UIColor.lightGray
+        // 変更ボタンを隠す
+        changeButton.isHidden = true
         
         // セルから移動してきた場合は商品の情報を反映しスイッチを表示、そうでなければ現在日時を取得しスイッチ非表示
         if let item = item {
@@ -78,25 +82,33 @@ class ItemEditPageViewController: UIViewController, UIImagePickerControllerDeleg
             nameText.text = item.name
             showStringLength(text: nameText!)
             priceText.text = item.price
+            isReEvaluation = item.isReEvaluation
             
             // 登録時の感想と評価点を各辞書に入れる
-            impressionDict["before"] = item.impression
-            ratingDict["before"] = item.rating
+            beforeImpression = item.beforeImpression
+            beforeRating = item.beforeRating
+            afterImpression = item.afterImpression
+            afterRating = item.afterRating
             
-            // 一年後の評価時に評価後の情報がプロパティになり変更ボタンが表示される
+            // 評価するかしないかで感想文の初期値を変更する
             if isReEvaluation {
                 //　評価時の感想と評価点を表示（初期値は何もない）
-                impressionText.text = impressionDict["after"]
-                ratingCount.rating = ratingDict["after"]!
+                if afterImpression.isEmpty {
+                    afterImpression = impressionPlaceHolderText
+                }
+                impressionText.text = afterImpression
+                ratingCount.rating = afterRating
                 changeButton.isHidden = false
             } else {
-                impressionText.text = impressionDict["before"]
-                ratingCount.rating = ratingDict["before"]!
+                impressionText.text = beforeImpression
+                ratingCount.rating = beforeRating
             }
             
         } else {
             // 現在日時を取得
-            registrationTimeText.text = Item.convertDateIntoString(date: Date())
+            
+            let b = testDate
+            registrationTimeText.text = Item.convertDateIntoString(date: b)
         }
     }
     
@@ -188,12 +200,24 @@ class ItemEditPageViewController: UIViewController, UIImagePickerControllerDeleg
     
     // キーボードが閉じた時 or 評価の星の個数が変更された時に呼ばれるメソッド。全て入力したら保存ボタンが有効になる
     func didchangeNotfication(notification: Notification) {
-        saveButton.isEnabled =
-            nameText.text?.isEmpty == false &&
-            priceText.text?.isEmpty == false &&
-            impressionText.text?.isEmpty == false &&
-            impressionText.text != impressionPlaceHolderText &&
-            ratingCount.rating > 0
+        
+        if isReEvaluation {
+            saveButton.isEnabled =
+                nameText.text?.isEmpty == false &&
+                priceText.text?.isEmpty == false &&
+                !afterImpression.isEmpty &&
+                afterImpression != impressionPlaceHolderText &&
+                ratingCount.rating > 0
+                
+        } else {
+            saveButton.isEnabled =
+                nameText.text?.isEmpty == false &&
+                priceText.text?.isEmpty == false &&
+                beforeImpression.isEmpty == false &&
+                beforeImpression != impressionPlaceHolderText &&
+                ratingCount.rating > 0
+        }
+        
     }
         
     // キャンセルボタンの挙動。新規登録と既存の編集で処理を変える
@@ -222,19 +246,18 @@ class ItemEditPageViewController: UIViewController, UIImagePickerControllerDeleg
         }
     }
     
+    // ONで評価後、OFFで評価前の感想文と評価点を切り替える
     @IBAction func tapChangeButton(_ sender: UISwitch) {
         
         if sender.isOn {
-            self.impressionText.text = impressionDict["after"]
+            self.impressionText.text = afterImpression
             self.impressionText.isEditable = true
-            
+            self.ratingCount.rating = afterRating
             self.ratingCount.isUserInteractionEnabled = true
-            self.ratingCount.rating = ratingDict["after"]!
         } else {
-            self.impressionText.text = impressionDict["before"]
+            self.impressionText.text = beforeImpression
             self.impressionText.isEditable = false
-            
-            self.ratingCount.rating = ratingDict["before"]!
+            self.ratingCount.rating = beforeRating
             self.ratingCount.isUserInteractionEnabled = false
         }
     }
@@ -324,6 +347,10 @@ extension ItemEditPageViewController: UITextViewDelegate {
         if textView.text.isEmpty {
             textView.text = impressionPlaceHolderText
             textView.textColor = UIColor.lightGray
+        } else if isReEvaluation {
+            afterImpression = textView.text!
+        } else {
+            beforeImpression = textView.text!
         }
     }
 }

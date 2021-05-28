@@ -72,7 +72,7 @@
                         <rightBarButtonItems>
                             <barButtonItem systemItem="add" id="Z4e-58-mnm">
                                 <connections>
-                                    <segue destination="0md-HU-D3N" kind="presentation" identifier="AddItem" id="uUH-eR-xgh"/>
+                                    <segue destination="0md-HU-D3N" kind="presentation" identifier="AddItem" modalPresentationStyle="fullScreen" id="uUH-eR-xgh"/>
                                 </connections>
                             </barButtonItem>
                             <barButtonItem systemItem="search" id="cfl-xa-hjM">
@@ -361,7 +361,7 @@
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="S0q-ms-WCd"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="qN4-Zr-wST">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
+                        <rect key="frame" x="0.0" y="44" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>

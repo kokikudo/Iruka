@@ -16,9 +16,12 @@ class Item: Object {
     @objc dynamic var photoImage = Data()
     @objc dynamic var name = ""
     @objc dynamic var price = ""
-    @objc dynamic var impression = ""
-    @objc dynamic var rating = 0
+    @objc dynamic var beforeImpression = ""
+    @objc dynamic var afterImpression = ""
+    @objc dynamic var beforeRating = 0
+    @objc dynamic var afterRating = 0
     @objc dynamic var isReEvaluation = false
+    @objc dynamic var isCompletedEvaluation = false
     
     override static func primaryKey() -> String? {
         return "id"
@@ -38,6 +41,13 @@ class Item: Object {
         let comps = calendar.dateComponents([.year, .month, .day], from: date)
         let truncateDay = calendar.date(from: comps)
         return truncateDay!.timeIntervalSince1970
+    }
+    
+    // テスト用。日付を指定したDateオブジェクトを作成
+    static func createDateObject(year: Int, month: Int, day: Int) -> Date {
+        let calendar = Calendar.current
+        let comp = DateComponents(year: year, month: month, day: day)
+        return calendar.date(from: comp)!
     }
 }
 
