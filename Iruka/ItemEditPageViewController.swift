@@ -43,7 +43,7 @@ class ItemEditPageViewController: UIViewController, UIImagePickerControllerDeleg
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         nameText.delegate = self
         priceText.delegate = self
         impressionText.delegate = self
@@ -55,7 +55,7 @@ class ItemEditPageViewController: UIViewController, UIImagePickerControllerDeleg
         /* 保存ボタン
          保存ボタンの有効無効の判断をするメソッドを実行させるための通知を登録
          キーボードが閉じた or 評価点が変更された　で通知を飛ばす
-        */
+         */
         saveButton.isEnabled = false
         NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification,
                                                object: nil,
@@ -208,7 +208,7 @@ class ItemEditPageViewController: UIViewController, UIImagePickerControllerDeleg
                 !afterImpression.isEmpty &&
                 afterImpression != impressionPlaceHolderText &&
                 ratingCount.rating > 0
-                
+            
         } else {
             saveButton.isEnabled =
                 nameText.text?.isEmpty == false &&
@@ -219,7 +219,7 @@ class ItemEditPageViewController: UIViewController, UIImagePickerControllerDeleg
         }
         
     }
-        
+    
     // キャンセルボタンの挙動。新規登録と既存の編集で処理を変える
     @IBAction func cancel(_ sender: UIBarButtonItem) {
         
@@ -234,7 +234,7 @@ class ItemEditPageViewController: UIViewController, UIImagePickerControllerDeleg
             fatalError("商品ページがナビゲーションコントローラの中にありません。")
         }
     }
-
+    
     func showStringLength(text: Any) {
         switch text {
         case is UITextView:
@@ -255,6 +255,8 @@ class ItemEditPageViewController: UIViewController, UIImagePickerControllerDeleg
             self.ratingCount.rating = afterRating
             self.ratingCount.isUserInteractionEnabled = true
         } else {
+            afterRating = ratingCount.rating
+            
             self.impressionText.text = beforeImpression
             self.impressionText.isEditable = false
             self.ratingCount.rating = beforeRating
