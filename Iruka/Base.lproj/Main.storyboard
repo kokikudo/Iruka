@@ -247,13 +247,13 @@
                                                         <rect key="frame" x="0.0" y="1047" width="384" height="50"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="評価" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zR1-xe-vOq">
-                                                                <rect key="frame" x="0.0" y="0.0" width="41" height="50"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="134" height="50"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xrd-iZ-db3" customClass="RatingControl" customModule="Iruka" customModuleProvider="target">
-                                                                <rect key="frame" x="41" y="0.0" width="343" height="50"/>
+                                                                <rect key="frame" x="134" y="0.0" width="250" height="50"/>
                                                                 <userDefinedRuntimeAttributes>
                                                                     <userDefinedRuntimeAttribute type="size" keyPath="starSize">
                                                                         <size key="value" width="50" height="50"/>

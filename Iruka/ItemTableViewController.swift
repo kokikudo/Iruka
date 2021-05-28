@@ -24,9 +24,13 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
     // Realmオブジェクト
     private var realm = try! Realm()
     
+    // 全評価完了
+    private var isAllEvaluationComplete: Bool!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        isAllEvaluationComplete = false
         print(realm.configuration.fileURL!)
         
         self.itemTableView.delegate = self
@@ -41,17 +45,17 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
     
     override func viewDidAppear(_ animated: Bool) {
         // 評価が終わったら前リスト表示
-        if showList.count == 0 {
+        if isAllEvaluationComplete {
+            showList = toggleShowList()
+            itemTableView.reloadData()
+            
             let alertController = UIAlertController(title: "テスト", message: "評価完了", preferredStyle: .alert)
             let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
             alertController.addAction(okAction)
             present(alertController, animated: true, completion: nil)
-            
-            showList = toggleShowList()
         }
-    
-        // テーブルビューのリロード
-        itemTableView.reloadData()
+        
+        
     }
     
     // MARK: - Table view data source
