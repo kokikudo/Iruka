@@ -51,6 +51,7 @@ class ItemEditPageViewController: UIViewController, UIImagePickerControllerDeleg
         // 何もないところをタップでキーボードを下げる
         downKeyboardInTap()
         
+        
         /* 保存ボタン
          保存ボタンの有効無効の判断をするメソッドを実行させるための通知を登録
          キーボードが閉じた or 評価点が変更された　で通知を飛ばす
@@ -70,7 +71,6 @@ class ItemEditPageViewController: UIViewController, UIImagePickerControllerDeleg
         // 感想文のプレースホルダーの状態
         impressionText.text = impressionPlaceHolderText
         impressionText.textColor = UIColor.lightGray
-        
         // 変更ボタンを隠す
         changeButton.isHidden = true
         
@@ -93,6 +93,9 @@ class ItemEditPageViewController: UIViewController, UIImagePickerControllerDeleg
             // 評価するかしないかで感想文の初期値を変更する
             if isReEvaluation {
                 //　評価時の感想と評価点を表示（初期値は何もない）
+                if afterImpression.isEmpty {
+                    afterImpression = impressionPlaceHolderText
+                }
                 impressionText.text = afterImpression
                 ratingCount.rating = afterRating
                 changeButton.isHidden = false
