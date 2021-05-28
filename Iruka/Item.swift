@@ -21,6 +21,7 @@ class Item: Object {
     @objc dynamic var beforeRating = 0
     @objc dynamic var afterRating = 0
     @objc dynamic var isReEvaluation = false
+    @objc dynamic var isCompletedEvaluation = false
     
     override static func primaryKey() -> String? {
         return "id"

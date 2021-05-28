@@ -31,13 +31,15 @@ class ItemEditPageViewController: UIViewController, UIImagePickerControllerDeleg
     
     var item: Item?
     
-    let registrationDay = Item.createDateObject(year: 2020, month: 4, day: 20)
-    var isReEvaluation = false
+    let registrationDay = Date()
+    var isReEvaluation = false   // 評価対象の商品の場合とそうでない場合で処理を変える
     var beforeImpression = ""
     var afterImpression = ""
     var beforeRating = 0
     var afterRating = 0
     
+    // test date
+    let testDate = Item.createDateObject(year: 2020, month: 4, day: 20)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -102,8 +104,8 @@ class ItemEditPageViewController: UIViewController, UIImagePickerControllerDeleg
         } else {
             // 現在日時を取得
             
-            let testDate = Item.createDateObject(year: 2020, month: 4, day: 20)
-            registrationTimeText.text = Item.convertDateIntoString(date: testDate)
+            let b = testDate
+            registrationTimeText.text = Item.convertDateIntoString(date: b)
         }
     }
     
