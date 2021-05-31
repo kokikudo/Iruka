@@ -3,6 +3,7 @@
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -105,7 +106,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="1300"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="eIH-Vy-dVG">
-                                                <rect key="frame" x="15" y="8" width="384" height="1167"/>
+                                                <rect key="frame" x="15" y="8" width="384" height="1197"/>
                                                 <subviews>
                                                     <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="398" placeholderIntrinsicHeight="398" image="defaultImage.001" translatesAutoresizingMaskIntoConstraints="NO" id="kHB-kP-gJD" userLabel="photoImage">
                                                         <rect key="frame" x="0.0" y="0.0" width="384" height="398"/>
@@ -247,13 +248,13 @@
                                                         <rect key="frame" x="0.0" y="1047" width="384" height="50"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="評価" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zR1-xe-vOq">
-                                                                <rect key="frame" x="0.0" y="0.0" width="134" height="50"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="41" height="50"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xrd-iZ-db3" customClass="RatingControl" customModule="Iruka" customModuleProvider="target">
-                                                                <rect key="frame" x="134" y="0.0" width="250" height="50"/>
+                                                                <rect key="frame" x="41" y="0.0" width="343" height="50"/>
                                                                 <userDefinedRuntimeAttributes>
                                                                     <userDefinedRuntimeAttribute type="size" keyPath="starSize">
                                                                         <size key="value" width="50" height="50"/>
@@ -263,14 +264,20 @@
                                                         </subviews>
                                                     </stackView>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YJV-dh-edd">
-                                                        <rect key="frame" x="0.0" y="1137" width="384" height="30"/>
+                                                        <rect key="frame" x="0.0" y="1137" width="384" height="60"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="60" id="LTJ-hw-4gb"/>
+                                                        </constraints>
                                                         <state key="normal" title="Button"/>
+                                                        <connections>
+                                                            <segue destination="WLc-3b-F6L" kind="unwind" unwindAction="unwindToItemListWithSender:" id="qmS-7O-IVQ"/>
+                                                        </connections>
                                                     </button>
                                                 </subviews>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <color key="backgroundColor" name="Background"/>
                                             </stackView>
                                         </subviews>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <color key="backgroundColor" name="Background"/>
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="eIH-Vy-dVG" secondAttribute="trailing" constant="15" id="95c-em-Npe"/>
                                             <constraint firstAttribute="height" constant="1300" id="J2m-Zn-lWB"/>
@@ -279,6 +286,7 @@
                                         </constraints>
                                     </view>
                                 </subviews>
+                                <color key="backgroundColor" name="Background"/>
                                 <constraints>
                                     <constraint firstItem="2Gg-jQ-uAv" firstAttribute="width" secondItem="yM7-kk-L0o" secondAttribute="width" id="16a-A7-z9L"/>
                                     <constraint firstItem="2Gg-jQ-uAv" firstAttribute="bottom" secondItem="iZ8-l9-aay" secondAttribute="bottom" id="EGy-bR-aIf"/>
@@ -291,7 +299,7 @@
                             </scrollView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="MUP-YU-fjA"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" name="Background"/>
                         <constraints>
                             <constraint firstItem="ybl-jA-jVh" firstAttribute="bottom" secondItem="MUP-YU-fjA" secondAttribute="bottom" id="Gj1-to-fRa"/>
                             <constraint firstItem="ybl-jA-jVh" firstAttribute="leading" secondItem="MUP-YU-fjA" secondAttribute="leading" id="TTq-g5-ibn"/>
@@ -303,11 +311,6 @@
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="opE-Rs-A8o">
                             <connections>
                                 <action selector="cancel:" destination="Tf5-F8-NQo" id="qUa-lv-Uiv"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="hOM-rd-cpW">
-                            <connections>
-                                <segue destination="WLc-3b-F6L" kind="unwind" unwindAction="unwindToItemListWithSender:" id="fbK-ke-rh1"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -326,7 +329,7 @@
                         <outlet property="ratingLabel" destination="zR1-xe-vOq" id="iZT-ep-mEe"/>
                         <outlet property="registrationTimeLabel" destination="dbV-V0-5I5" id="EOh-hq-2ey"/>
                         <outlet property="registrationTimeText" destination="BXr-Q7-itK" id="Cg2-yJ-7cs"/>
-                        <outlet property="saveButton" destination="hOM-rd-cpW" id="RmU-Da-u9r"/>
+                        <outlet property="saveButton" destination="YJV-dh-edd" id="r9r-18-7uz"/>
                         <outlet property="wordCountLabel" destination="nMy-4n-aZB" id="tz6-4Z-ObD"/>
                     </connections>
                 </viewController>
@@ -383,6 +386,9 @@
     </inferredMetricsTieBreakers>
     <resources>
         <image name="defaultImage.001" width="1024" height="768"/>
+        <namedColor name="Background">
+            <color red="0.97647058823529409" green="0.95686274509803926" blue="0.93725490196078431" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

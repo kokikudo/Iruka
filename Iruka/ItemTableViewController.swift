@@ -30,7 +30,7 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print(Realm.Configuration.defaultConfiguration.fileURL!)
+        view.backgroundColor = UIColor(named: "Background")
         
         isAllEvaluationComplete = false
         print(realm.configuration.fileURL!)
@@ -75,6 +75,7 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
         cell.registrationTimeText.text = Item.convertDateIntoString(date: item.date)
         cell.photoImage.image = UIImage(data: item.photoImage)
         cell.itemNameText.text = item.name
+        
         return cell
     }
     
