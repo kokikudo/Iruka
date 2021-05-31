@@ -30,6 +30,8 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        print(Realm.Configuration.defaultConfiguration.fileURL!)
+        
         isAllEvaluationComplete = false
         print(realm.configuration.fileURL!)
         
@@ -43,19 +45,17 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
         setupSearchController()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         // 評価が終わったら前リスト表示
         if isAllEvaluationComplete {
             showList = toggleShowList()
-            itemTableView.reloadData()
-            
             let alertController = UIAlertController(title: "テスト", message: "評価完了", preferredStyle: .alert)
             let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
             alertController.addAction(okAction)
             present(alertController, animated: true, completion: nil)
         }
         
-        
+        itemTableView.reloadData()
     }
     
     // MARK: - Table view data source
@@ -72,7 +72,7 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
         
         let item = showList[indexPath.row]
         
-        cell.registrationTimeText.text = item.date
+        cell.registrationTimeText.text = Item.convertDateIntoString(date: item.date)
         cell.photoImage.image = UIImage(data: item.photoImage)
         cell.itemNameText.text = item.name
         return cell
@@ -121,18 +121,22 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
     
     // 表示する商品のリストを都度変更する
     private func toggleShowList() -> Results<Item> {
+        let list: Results<Item>
+        
         if let a = searchedList, a.count > 0 {
-            return a
+            list = a
         } else if needToBeEvaluatedList.count > 0 {
             self.navigationItem.rightBarButtonItems?[0].isEnabled = false
             self.navigationItem.rightBarButtonItems?[1].isEnabled = false
-            //searchButton.isEnabled = false
-            return needToBeEvaluatedList
+            list = needToBeEvaluatedList
         } else {
             self.navigationItem.rightBarButtonItems?[0].isEnabled = true
             self.navigationItem.rightBarButtonItems?[1].isEnabled = true
-            return allList
+            list = allList
         }
+        let result = list.sorted(byKeyPath: "date", ascending: false)
+        
+        return result
     }
     
     // セルをタップしたらその商品の編集画面に移動
@@ -165,9 +169,6 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
             
             let item = Item()
             item.photoImage = (sourceViewController.photoImage.image?.pngData()!)!
-            item.date = sourceViewController.registrationTimeText.text!
-            // テスト用。去年以前の商品をセット
-            item.dateSecond = Item.convertDateIntoDouble(date: sourceViewController.testDate)
             item.name = sourceViewController.nameText.text!
             item.price = sourceViewController.priceText.text!
             
@@ -193,7 +194,7 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
             }
             
             // 通知登録
-            setNotification(date: sourceViewController.registrationDay)
+            setNotification(date: item.date)
         }
         
     }
@@ -260,9 +261,11 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
     // 2つの条件を満たした商品を絞り込む(去年以前であること、評価が終わってないこと)
     func select(items: Results<Item>) -> Results<Item> {
         
-        // 去年の日付を算出し、秒数に変換
-        let dateBefore1Year = Calendar.current.date(byAdding: .year, value: -1, to: Date())!
-        let convertedDB1Y = Item.convertDateIntoDouble(date: dateBefore1Year)
+        // 去年の日付の23時59分59秒より以前
+        let calendar = Calendar(identifier: .gregorian)
+        let comps = calendar.dateComponents([.year, .month, .day], from: Date())
+        let dateBefore1Year = calendar.date(from: DateComponents(year: comps.year! - 1, month: comps.month, day: comps.day, hour: 23, minute: 59, second: 59))
+        let convertedDB1Y = dateBefore1Year!.timeIntervalSince1970
         print("今日の日付：\(Item.convertDateIntoDouble(date: Date()))")
         print("去年の日付：\(convertedDB1Y)")
         
