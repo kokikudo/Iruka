@@ -31,7 +31,6 @@ class ItemEditPageViewController: UIViewController, UIImagePickerControllerDeleg
     
     var item: Item?
     
-    let registrationDay = Date()
     var isReEvaluation = false   // 評価対象の商品の場合とそうでない場合で処理を変える
     var beforeImpression = ""
     var afterImpression = ""
@@ -78,7 +77,7 @@ class ItemEditPageViewController: UIViewController, UIImagePickerControllerDeleg
         if let item = item {
             
             photoImage.image = UIImage(data: item.photoImage)
-            registrationTimeText.text = item.date
+            registrationTimeText.text = Item.convertDateIntoString(date: item.date)
             nameText.text = item.name
             showStringLength(text: nameText!)
             priceText.text = item.price
@@ -106,9 +105,7 @@ class ItemEditPageViewController: UIViewController, UIImagePickerControllerDeleg
             
         } else {
             // 現在日時を取得
-            
-            let b = testDate
-            registrationTimeText.text = Item.convertDateIntoString(date: b)
+            registrationTimeText.text = Item.convertDateIntoString(date: Date())
         }
     }
     

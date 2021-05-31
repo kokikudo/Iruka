@@ -11,8 +11,8 @@ import RealmSwift
 class Item: Object {
     
     @objc dynamic var id: String?
-    @objc dynamic var date = ""
-    @objc dynamic var dateSecond: Double = 0
+    @objc dynamic var date = Date()
+    @objc dynamic var dateSecond = Date().timeIntervalSince1970
     @objc dynamic var photoImage = Data()
     @objc dynamic var name = ""
     @objc dynamic var price = ""
