@@ -15,6 +15,10 @@ class ItemTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
+        self.backgroundColor = UIColor(named: "Background")
+        itemNameText.textColor = UIColor(named: "Text")
+        registrationTimeText.textColor = UIColor(named: "Text")
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {

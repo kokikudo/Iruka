@@ -20,6 +20,8 @@
 		FD62C86826256245000B277A /* ItemEditPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD62C86726256245000B277A /* ItemEditPageViewController.swift */; };
 		FD62C8702625787A000B277A /* ItemTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD62C86F2625787A000B277A /* ItemTableViewController.swift */; };
 		FD72EACD262C6232002D4C85 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD72EACC262C6232002D4C85 /* Item.swift */; };
+		FD94A54E2665EBF8008782C7 /* SaveButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD94A54D2665EBF8008782C7 /* SaveButton.swift */; };
+		FD94A55B2665EE19008782C7 /* newDesjgnUITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD94A55A2665EE19008782C7 /* newDesjgnUITextField.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,6 +68,8 @@
 		FD62C86F2625787A000B277A /* ItemTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemTableViewController.swift; sourceTree = "<group>"; };
 		FD648CB3263B019600F26AA2 /* Iruka.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Iruka.entitlements; sourceTree = "<group>"; };
 		FD72EACC262C6232002D4C85 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
+		FD94A54D2665EBF8008782C7 /* SaveButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveButton.swift; sourceTree = "<group>"; };
+		FD94A55A2665EE19008782C7 /* newDesjgnUITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = newDesjgnUITextField.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -149,6 +153,8 @@
 				FD461B5F262D71AB00F736C6 /* ItemTableViewCell.swift */,
 				FD62C86726256245000B277A /* ItemEditPageViewController.swift */,
 				FD629D7C262133B9004948F8 /* Assets.xcassets */,
+				FD94A54D2665EBF8008782C7 /* SaveButton.swift */,
+				FD94A55A2665EE19008782C7 /* newDesjgnUITextField.swift */,
 				FD629D7E262133B9004948F8 /* LaunchScreen.storyboard */,
 				FD629D81262133B9004948F8 /* Info.plist */,
 				FD14C17B264BAAA800E751F8 /* GoogleService-Info.plist */,
@@ -350,6 +356,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				FD72EACD262C6232002D4C85 /* Item.swift in Sources */,
+				FD94A55B2665EE19008782C7 /* newDesjgnUITextField.swift in Sources */,
+				FD94A54E2665EBF8008782C7 /* SaveButton.swift in Sources */,
 				FD62C86826256245000B277A /* ItemEditPageViewController.swift in Sources */,
 				FD461B60262D71AC00F736C6 /* ItemTableViewCell.swift in Sources */,
 				FD62C8702625787A000B277A /* ItemTableViewController.swift in Sources */,

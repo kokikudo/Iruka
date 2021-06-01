@@ -1,0 +1,37 @@
+//
+//  newDesjgnUITextField.swift
+//  Iruka
+//
+//  Created by kudo koki on 2021/06/01.
+//
+
+import UIKit
+
+class newDesjgnUITextField: UITextField {
+
+    let underline: UIView = UIView()
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        
+        self.borderStyle = .none
+        self.textAlignment = .left
+        // プレースホルダーの色を変える。プレースホルダー必須の時のみ実装。
+        self.attributedPlaceholder = NSAttributedString(string: "未入力", attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray])
+        composeUnderline()
+    }
+    
+    private func composeUnderline() {
+        self.underline.frame = CGRect(x: 0,
+                                      y: self.frame.height,
+                                      width: self.frame.width,
+                                      height: 3.0)
+        
+        self.underline.backgroundColor = UIColor(named: "Underline")
+        
+        self.addSubview(self.underline)
+        self.bringSubviewToFront(self.underline)
+    }
+
+}

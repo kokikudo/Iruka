@@ -14,20 +14,21 @@ class ItemEditPageViewController: UIViewController, UIImagePickerControllerDeleg
     @IBOutlet weak var registrationTimeText: UILabel!
     @IBOutlet weak var photoImage: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var nameText: UITextField!
+    @IBOutlet weak var nameText: newDesjgnUITextField!
     @IBOutlet weak var wordCountLabel: UILabel!
     private let itemNameTextMaxCount = 40
     @IBOutlet weak var priceLabel: UILabel!
-    @IBOutlet weak var priceText: UITextField!
+    @IBOutlet weak var priceText: newDesjgnUITextField!
     @IBOutlet weak var ratingLabel: UILabel!
     @IBOutlet weak var impressionLabel: UILabel!
     @IBOutlet weak var changeButton: UISwitch!
-    @IBOutlet weak var saveButton: UIBarButtonItem!
     @IBOutlet weak var impressionText: UITextView!
     @IBOutlet weak var impressionWordCountLabel: UILabel!
     private let impressionMaxCount = 150
-    private let impressionPlaceHolderText = "(150文字まで)"
+    private let impressionPlaceHolderText = "未入力"
     @IBOutlet weak var ratingCount: RatingControl!
+    @IBOutlet weak var saveButton: SaveButton!
+    
     
     var item: Item?
     
@@ -83,7 +84,7 @@ class ItemEditPageViewController: UIViewController, UIImagePickerControllerDeleg
             priceText.text = item.price
             isReEvaluation = item.isReEvaluation
             
-            // 登録時の感想と評価点を各辞書に入れる
+            // 評価前後の感想文と評価点を各プロパティにセット
             beforeImpression = item.beforeImpression
             beforeRating = item.beforeRating
             afterImpression = item.afterImpression
@@ -107,6 +108,8 @@ class ItemEditPageViewController: UIViewController, UIImagePickerControllerDeleg
             // 現在日時を取得
             registrationTimeText.text = Item.convertDateIntoString(date: Date())
         }
+        
+        // 色の設定
     }
     
     override func viewWillDisappear(_ animated: Bool) {
