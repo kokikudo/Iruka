@@ -25,7 +25,7 @@ class ItemEditPageViewController: UIViewController, UIImagePickerControllerDeleg
     @IBOutlet weak var impressionText: UITextView!
     @IBOutlet weak var impressionWordCountLabel: UILabel!
     private let impressionMaxCount = 150
-    private let impressionPlaceHolderText = "(150文字まで)"
+    private let impressionPlaceHolderText = "未入力"
     @IBOutlet weak var ratingCount: RatingControl!
     @IBOutlet weak var saveButton: SaveButton!
     
@@ -84,7 +84,7 @@ class ItemEditPageViewController: UIViewController, UIImagePickerControllerDeleg
             priceText.text = item.price
             isReEvaluation = item.isReEvaluation
             
-            // 登録時の感想と評価点を各辞書に入れる
+            // 評価前後の感想文と評価点を各プロパティにセット
             beforeImpression = item.beforeImpression
             beforeRating = item.beforeRating
             afterImpression = item.afterImpression

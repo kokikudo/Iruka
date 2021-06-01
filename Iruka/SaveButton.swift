@@ -24,10 +24,8 @@ class SaveButton: UIButton {
     func setup() {
         self.setTitle("保存する", for: UIControl.State.normal)
         self.layer.cornerRadius = 20
-        self.layer.borderColor = UIColor.black.cgColor //cgColor: CoreGraficsの色を使う
-        self.layer.borderWidth = 1
         self.layer.masksToBounds = true // コンテンツを定義した枠線内に収める
-        self.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+        self.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
     }
     
     override var isEnabled: Bool {

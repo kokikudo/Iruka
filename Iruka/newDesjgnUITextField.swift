@@ -14,11 +14,11 @@ class newDesjgnUITextField: UITextField {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        //self.frame.size.height = 50 指定したらカウント数の文字列と重なった
-        self.borderStyle = .none
         
+        self.borderStyle = .none
+        self.textAlignment = .left
         // プレースホルダーの色を変える。プレースホルダー必須の時のみ実装。
-//        self.attributedPlaceholder = NSAttributedString(string: "placeholder text", attributes: [NSAttributedString.Key.foregroundColor: UIColor.red])
+        self.attributedPlaceholder = NSAttributedString(string: "未入力", attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray])
         composeUnderline()
     }
     
@@ -26,7 +26,7 @@ class newDesjgnUITextField: UITextField {
         self.underline.frame = CGRect(x: 0,
                                       y: self.frame.height,
                                       width: self.frame.width,
-                                      height: 2.5)
+                                      height: 3.0)
         
         self.underline.backgroundColor = UIColor(named: "Underline")
         
