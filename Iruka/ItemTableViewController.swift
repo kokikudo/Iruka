@@ -54,7 +54,7 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
             alertController.addAction(okAction)
             present(alertController, animated: true, completion: nil)
         }
-        
+        navigationItem.title = "home"
         itemTableView.reloadData()
     }
     

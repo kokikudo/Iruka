@@ -22,6 +22,7 @@
 		FD72EACD262C6232002D4C85 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD72EACC262C6232002D4C85 /* Item.swift */; };
 		FD94A54E2665EBF8008782C7 /* SaveButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD94A54D2665EBF8008782C7 /* SaveButton.swift */; };
 		FD94A55B2665EE19008782C7 /* newDesjgnUITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD94A55A2665EE19008782C7 /* newDesjgnUITextField.swift */; };
+		FDD24A3726670CFC0043BB32 /* MyUIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD24A3626670CFC0043BB32 /* MyUIViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +71,7 @@
 		FD72EACC262C6232002D4C85 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		FD94A54D2665EBF8008782C7 /* SaveButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveButton.swift; sourceTree = "<group>"; };
 		FD94A55A2665EE19008782C7 /* newDesjgnUITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = newDesjgnUITextField.swift; sourceTree = "<group>"; };
+		FDD24A3626670CFC0043BB32 /* MyUIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyUIViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,6 +149,7 @@
 				FD648CB3263B019600F26AA2 /* Iruka.entitlements */,
 				FD629D73262133B5004948F8 /* AppDelegate.swift */,
 				FD629D79262133B5004948F8 /* Main.storyboard */,
+				FDD24A3626670CFC0043BB32 /* MyUIViewController.swift */,
 				FD72EACC262C6232002D4C85 /* Item.swift */,
 				FD55ED85262816520074530B /* RatingControl.swift */,
 				FD62C86F2625787A000B277A /* ItemTableViewController.swift */,
@@ -360,6 +363,7 @@
 				FD94A54E2665EBF8008782C7 /* SaveButton.swift in Sources */,
 				FD62C86826256245000B277A /* ItemEditPageViewController.swift in Sources */,
 				FD461B60262D71AC00F736C6 /* ItemTableViewCell.swift in Sources */,
+				FDD24A3726670CFC0043BB32 /* MyUIViewController.swift in Sources */,
 				FD62C8702625787A000B277A /* ItemTableViewController.swift in Sources */,
 				FD629D74262133B5004948F8 /* AppDelegate.swift in Sources */,
 				FD55ED86262816520074530B /* RatingControl.swift in Sources */,
