@@ -18,7 +18,15 @@ class newDesjgnUITextField: UITextField {
         self.borderStyle = .none
         self.textAlignment = .left
         // プレースホルダーの色を変える。プレースホルダー必須の時のみ実装。
-        self.attributedPlaceholder = NSAttributedString(string: "未入力", attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray])
+        switch self.restorationIdentifier {
+        case "itemname":
+            self.attributedPlaceholder = NSAttributedString(string: "40文字まで", attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray])
+        case "itemprice":
+            self.attributedPlaceholder = NSAttributedString(string: "0", attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray])
+        default:
+            fatalError("ID認証失敗：newDesjgnUITextField.restorationIdentifier")
+        }
+        
         composeUnderline()
     }
     

@@ -144,7 +144,7 @@
                                                                 <color key="textColor" name="Text"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <textField opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Kre-WS-Dah" customClass="newDesjgnUITextField" customModule="Iruka" customModuleProvider="target">
+                                                            <textField opaque="NO" tag="1" contentMode="scaleToFill" restorationIdentifier="itemname" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Kre-WS-Dah" customClass="newDesjgnUITextField" customModule="Iruka" customModuleProvider="target">
                                                                 <rect key="frame" x="0.0" y="29" width="354" height="35"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="35" id="7ek-Hs-FW6"/>
@@ -170,7 +170,7 @@
                                                                 <color key="textColor" name="Text"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <textField opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8Ab-99-0rY" customClass="newDesjgnUITextField" customModule="Iruka" customModuleProvider="target">
+                                                            <textField opaque="NO" tag="2" contentMode="scaleToFill" restorationIdentifier="itemprice" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8Ab-99-0rY" customClass="newDesjgnUITextField" customModule="Iruka" customModuleProvider="target">
                                                                 <rect key="frame" x="0.0" y="29" width="354" height="35"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="35" id="hJW-zG-lpH"/>
@@ -223,13 +223,13 @@
                                                         <rect key="frame" x="0.0" y="882" width="354" height="50"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="評価" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zR1-xe-vOq">
-                                                                <rect key="frame" x="0.0" y="0.0" width="99" height="50"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="41" height="50"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                                 <color key="textColor" name="Text"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xrd-iZ-db3" customClass="RatingControl" customModule="Iruka" customModuleProvider="target">
-                                                                <rect key="frame" x="104" y="0.0" width="250" height="50"/>
+                                                                <rect key="frame" x="46" y="0.0" width="308" height="50"/>
                                                                 <userDefinedRuntimeAttributes>
                                                                     <userDefinedRuntimeAttribute type="size" keyPath="starSize">
                                                                         <size key="value" width="50" height="50"/>

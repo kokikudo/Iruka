@@ -289,14 +289,13 @@ extension ItemEditPageViewController: UITextFieldDelegate {
     // 金額入力後、完了ボタンを押すと通貨記号が付いたフォーマットに変わりキーボードを閉じる
     @objc func priceTextShouldReturn() -> Bool {
         // フォーマットに適用するために金額をFloat型に変換
-        guard let price = Float(priceText.text!) else {
-            fatalError("数字以外の文字が入力されました")
+        if let price = Float(priceText.text!) {
+            // 単位を追加するフォーマットを作成
+            let priceFormatter = NumberFormatter()
+            priceFormatter.numberStyle = .currency  // 通貨記号をつける
+            // セット
+            priceText.text = priceFormatter.string(from: NSNumber(value: price))
         }
-        // 単位を追加するフォーマットを作成
-        let priceFormatter = NumberFormatter()
-        priceFormatter.numberStyle = .currency  // 通貨記号をつける
-        // セット
-        priceText.text = priceFormatter.string(from: NSNumber(value: price))
         
         priceText.resignFirstResponder()
         return true
