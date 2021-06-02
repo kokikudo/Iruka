@@ -76,6 +76,7 @@ class ItemEditPageViewController: UIViewController, UIImagePickerControllerDeleg
         
         // セルから移動してきた場合は商品の情報を反映しスイッチを表示、そうでなければ現在日時を取得しスイッチ非表示
         if let item = item {
+            navigationItem.title = "編集"
             
             photoImage.image = UIImage(data: item.photoImage)
             registrationTimeText.text = Item.convertDateIntoString(date: item.date)
@@ -105,6 +106,7 @@ class ItemEditPageViewController: UIViewController, UIImagePickerControllerDeleg
             }
             
         } else {
+            navigationItem.title = "新規登録"
             // 現在日時を取得
             registrationTimeText.text = Item.convertDateIntoString(date: Date())
         }
