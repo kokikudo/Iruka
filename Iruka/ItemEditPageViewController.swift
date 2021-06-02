@@ -51,7 +51,6 @@ class ItemEditPageViewController: UIViewController, UIImagePickerControllerDeleg
         // 何もないところをタップでキーボードを下げる
         downKeyboardInTap()
         
-        
         /* 保存ボタン
          保存ボタンの有効無効の判断をするメソッドを実行させるための通知を登録
          キーボードが閉じた or 評価点が変更された　で通知を飛ばす
@@ -65,6 +64,7 @@ class ItemEditPageViewController: UIViewController, UIImagePickerControllerDeleg
                                                object: nil,
                                                queue: nil,
                                                using: didchangeNotfication(notification:))
+        
         
         // 金額入力のキーボードにリターンキーを追加
         addReturnBotton()
@@ -110,8 +110,6 @@ class ItemEditPageViewController: UIViewController, UIImagePickerControllerDeleg
             // 現在日時を取得
             registrationTimeText.text = Item.convertDateIntoString(date: Date())
         }
-        
-        // 色の設定
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -130,16 +128,8 @@ class ItemEditPageViewController: UIViewController, UIImagePickerControllerDeleg
     }
     // 金額と感想のキーボードにリターンボタンを追加
     func addReturnBotton() {
-        let priceTextToolber: UIToolbar = UIToolbar()
         let impressionTextToolber: UIToolbar = UIToolbar()
         let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        let priceTextDone = UIBarButtonItem(title: "完了",
-                                            style: .done,
-                                            target: self,
-                                            action: #selector(priceTextShouldReturn))
-        priceTextToolber.items = [space, priceTextDone]
-        priceTextToolber.sizeToFit()
-        priceText.inputAccessoryView = priceTextToolber
         
         let impressionTextDone = UIBarButtonItem(title: "完了",
                                                  style: .done,
@@ -281,31 +271,31 @@ extension ItemEditPageViewController: UITextFieldDelegate {
         }
     }
     
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if textField.restorationIdentifier == "itemprice" {
+            // フォーマットに適用するために金額をFloat型に変換
+            if let price = Float(priceText.text!) {
+                // 単位を追加するフォーマットを作成
+                let priceFormatter = NumberFormatter()
+                priceFormatter.numberStyle = .currency  // 通貨記号をつける
+                // セット
+                priceText.text = priceFormatter.string(from: NSNumber(value: price))
+            }
+            
+            priceText.resignFirstResponder()
+        }
+    }
+    
     // リターンキーでキーボードを下げる
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
-        return true
-    }
-    // 金額入力後、完了ボタンを押すと通貨記号が付いたフォーマットに変わりキーボードを閉じる
-    @objc func priceTextShouldReturn() -> Bool {
-        // フォーマットに適用するために金額をFloat型に変換
-        guard let price = Float(priceText.text!) else {
-            fatalError("数字以外の文字が入力されました")
-        }
-        // 単位を追加するフォーマットを作成
-        let priceFormatter = NumberFormatter()
-        priceFormatter.numberStyle = .currency  // 通貨記号をつける
-        // セット
-        priceText.text = priceFormatter.string(from: NSNumber(value: price))
-        
-        priceText.resignFirstResponder()
         return true
     }
     
     // 文字数制限
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         // 商品名のみに文字数制限
-        if textField === nameText {
+        if textField.restorationIdentifier == "itemname" {
             // 入力を反映したテキストを取得
             let resultText: String = (textField.text! as NSString).replacingCharacters(in: range, with: string)
             return resultText.count <= itemNameTextMaxCount
@@ -316,7 +306,9 @@ extension ItemEditPageViewController: UITextFieldDelegate {
     
     // 現在の文字数表示
     func textFieldDidChangeSelection(_ textField: UITextField) {
-        showStringLength(text: textField)
+        if textField.restorationIdentifier == "itemname" {
+            showStringLength(text: textField)
+        }
     }
     
 }
@@ -356,6 +348,8 @@ extension ItemEditPageViewController: UITextViewDelegate {
         } else {
             beforeImpression = textView.text!
         }
+        
+        textView.resignFirstResponder()
     }
 }
 
