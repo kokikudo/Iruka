@@ -30,6 +30,14 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let ud = UserDefaults.standard
+        let firstLunchKey = "firstLunch"
+        if ud.bool(forKey: firstLunchKey) {
+            ud.setValue(false, forKeyPath: firstLunchKey)
+            ud.synchronize()
+            self.performSegue(withIdentifier: "toApp", sender: nil)
+        }
+        
         view.backgroundColor = UIColor(named: "Background")
         
         isAllEvaluationComplete = false
@@ -157,6 +165,8 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
                 }
                 destnation.item = showList[indexPath.row]
             }
+        case "toApp":
+            print("チュートリアル表示")
         default:
             fatalError("segueのIDが一致しませんでした。")
         }

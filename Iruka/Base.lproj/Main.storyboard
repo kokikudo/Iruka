@@ -85,6 +85,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="itemTableView" destination="KNq-5G-VZO" id="dZ3-zh-UFl"/>
+                        <segue destination="bhc-Hs-IO8" kind="presentation" identifier="toApp" id="aAw-pE-ttH"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YZe-GB-KxK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -223,13 +224,13 @@
                                                         <rect key="frame" x="0.0" y="882" width="354" height="50"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="評価" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zR1-xe-vOq">
-                                                                <rect key="frame" x="0.0" y="0.0" width="99" height="50"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="41" height="50"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                                 <color key="textColor" name="Text"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xrd-iZ-db3" customClass="RatingControl" customModule="Iruka" customModuleProvider="target">
-                                                                <rect key="frame" x="104" y="0.0" width="250" height="50"/>
+                                                                <rect key="frame" x="46" y="0.0" width="308" height="50"/>
                                                                 <userDefinedRuntimeAttributes>
                                                                     <userDefinedRuntimeAttribute type="size" keyPath="starSize">
                                                                         <size key="value" width="50" height="50"/>
@@ -348,6 +349,21 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="L7u-GE-ya3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-119" y="68"/>
+        </scene>
+        <!--To App View Controller-->
+        <scene sceneID="LGb-RA-N03">
+            <objects>
+                <viewController useStoryboardIdentifierAsRestorationIdentifier="YES" id="bhc-Hs-IO8" customClass="toAppViewController" customModule="Iruka" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="0HY-F8-3g6">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="758"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="3Mo-Ak-u4W"/>
+                        <color key="backgroundColor" name="Background"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pGq-CK-hSt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="830" y="841"/>
         </scene>
         <!--MyUI Navigation Controller-->
         <scene sceneID="u9L-wU-NN8">
