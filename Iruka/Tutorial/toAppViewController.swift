@@ -9,7 +9,6 @@ import UIKit
 
 class toAppViewController: UIViewController {
     
-    
     private var pageViewController: UIPageViewController!
     private var controllers: [UIViewController] = []
     //
@@ -31,7 +30,7 @@ class toAppViewController: UIViewController {
         addingViewToArray(imageCount: 6)
         
         // PageViewControllerの定義
-        self.pageViewController = UIPageViewController(transitionStyle: .pageCurl, navigationOrientation: .horizontal, options: nil)
+        self.pageViewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
         self.pageViewController.setViewControllers([self.controllers[0]], direction: .forward, animated: true, completion: nil)
         self.pageViewController.dataSource = self
         self.pageViewController.delegate = self
@@ -64,43 +63,44 @@ class toAppViewController: UIViewController {
             
             myViewController.view.frame = self.view.frame
             
+            myViewController.view.backgroundColor = UIColor(named: "Background")
+            
             let image = UIImage(named: "\(i)")!
             let imageView = UIImageView(image: image)
             
-            // スクリーンのサイズ
-            let screenWidth :CGFloat = myViewController.view.frame.size.width
-            let screenHeight :CGFloat = myViewController.view.frame.size.height
-            
-            // 画像の縦横サイズを取得
-            let imgWidth :CGFloat = image.size.width
-            let imgHeight :CGFloat = image.size.height
-            
-            // 画像サイズをスクリーン幅に合わせる
-            let scale: CGFloat = screenWidth / imgWidth
-            let rect: CGRect =
-                CGRect(x:0, y:0, width:imgWidth*scale, height:imgHeight*scale)
-            
-            // ImageView frame をCGRectで作った矩形に合わせる
-            imageView.frame = rect
-            
-            // 画像の中心を画面の中心に設定
-            imageView.center = CGPoint(x:screenWidth/2, y:screenHeight/2)
-            
             myViewController.view.addSubview(imageView)
-            // 最後のビューなら閉じるボタン追加
-            if i == imageCount {
-                let button = UIButton()
-                button.frame = CGRect(x: screenWidth/2 - 50, y: UIScreen.main.bounds.maxY - 150, width: 100, height: 50)
+            
+            imageView.contentMode = .scaleAspectFit
+            
+            // AutoLayout解除
+            imageView.translatesAutoresizingMaskIntoConstraints = false
+            
+            // 制約を決める
+            NSLayoutConstraint.activate([
+                // サイズ
+                imageView.widthAnchor.constraint(equalToConstant: myViewController.view.bounds.maxX), // 横幅：画面いっぱい
+                imageView.heightAnchor.constraint(equalToConstant: myViewController.view.bounds.maxY - 100), // 縦幅：一番下から100を引く(PageControlより50上)
                 
-                button.setTitle("始める", for: .normal)
-                button.setTitleColor(.white, for: .normal)
-                button.titleLabel?.font = UIFont.systemFont(ofSize: 20)
-                button.backgroundColor = UIColor(named: "Button")
-                button.layer.cornerRadius = 20
-                button.layer.masksToBounds = true
-                button.addAction(.init { _ in self.dismiss(animated: true, completion: nil) }, for: .touchUpInside)
-                myViewController.view.addSubview(button)
-            }
+                // レイアウト
+                imageView.topAnchor.constraint(equalTo: myViewController.view.safeAreaLayoutGuide.topAnchor, constant: 8), // top
+                imageView.leftAnchor.constraint(equalTo: myViewController.view.safeAreaLayoutGuide.leftAnchor, constant: 8), // left
+                imageView.rightAnchor.constraint(equalTo: myViewController.view.safeAreaLayoutGuide.rightAnchor, constant: 8) // right
+                ])
+        
+            // 最後のビューなら閉じるボタン追加
+//            if i == imageCount {
+//                let button = UIButton()
+//                button.frame = CGRect(x: screenWidth/2 - 50, y: UIScreen.main.bounds.maxY - 150, width: 100, height: 50)
+//
+//                button.setTitle("始める", for: .normal)
+//                button.setTitleColor(.white, for: .normal)
+//                button.titleLabel?.font = UIFont.systemFont(ofSize: 20)
+//                button.backgroundColor = UIColor(named: "Button")
+//                button.layer.cornerRadius = 20
+//                button.layer.masksToBounds = true
+//                button.addAction(.init { _ in self.dismiss(animated: true, completion: nil) }, for: .touchUpInside)
+//                myViewController.view.addSubview(button)
+//            }
             
             self.controllers.append(myViewController)
         }
