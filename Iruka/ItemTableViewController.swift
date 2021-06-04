@@ -291,4 +291,7 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
         }
         return result
     }
+    @IBAction func showTutorial(_ sender: UIBarButtonItem) {
+        self.performSegue(withIdentifier: "toApp", sender: nil)
+    }
 }

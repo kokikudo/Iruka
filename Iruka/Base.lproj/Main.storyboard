@@ -81,6 +81,11 @@
                                     <action selector="searchBar:" destination="XGR-zs-e48" id="yii-LX-pHa"/>
                                 </connections>
                             </barButtonItem>
+                            <barButtonItem title="Item" image="info.circle" catalog="system" id="Awh-2K-mUx">
+                                <connections>
+                                    <action selector="showTutorial:" destination="XGR-zs-e48" id="rER-uM-o8Z"/>
+                                </connections>
+                            </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
@@ -390,6 +395,7 @@
     </inferredMetricsTieBreakers>
     <resources>
         <image name="defaultImage.001" width="207.33332824707031" height="170.66667175292969"/>
+        <image name="info.circle" catalog="system" width="128" height="121"/>
         <namedColor name="Background">
             <color red="0.97600001096725464" green="0.9570000171661377" blue="0.93699997663497925" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
