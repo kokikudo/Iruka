@@ -81,10 +81,16 @@
                                     <action selector="searchBar:" destination="XGR-zs-e48" id="yii-LX-pHa"/>
                                 </connections>
                             </barButtonItem>
+                            <barButtonItem title="Item" image="info.circle" catalog="system" id="Awh-2K-mUx">
+                                <connections>
+                                    <action selector="showTutorial:" destination="XGR-zs-e48" id="rER-uM-o8Z"/>
+                                </connections>
+                            </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="itemTableView" destination="KNq-5G-VZO" id="dZ3-zh-UFl"/>
+                        <segue destination="bhc-Hs-IO8" kind="presentation" identifier="toApp" id="aAw-pE-ttH"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YZe-GB-KxK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -339,6 +345,9 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" restorationIdentifier="homeNavigation" id="Qzd-Vu-Adj">
                         <rect key="frame" x="0.0" y="44" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <textAttributes key="largeTitleTextAttributes">
+                            <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
+                        </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -348,6 +357,21 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="L7u-GE-ya3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-119" y="68"/>
+        </scene>
+        <!--To App View Controller-->
+        <scene sceneID="LGb-RA-N03">
+            <objects>
+                <viewController useStoryboardIdentifierAsRestorationIdentifier="YES" id="bhc-Hs-IO8" customClass="toAppViewController" customModule="Iruka" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="0HY-F8-3g6">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="758"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="3Mo-Ak-u4W"/>
+                        <color key="backgroundColor" name="Background"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pGq-CK-hSt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="830" y="841"/>
         </scene>
         <!--MyUI Navigation Controller-->
         <scene sceneID="u9L-wU-NN8">
@@ -370,10 +394,11 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Nno-hQ-RLg"/>
+        <segue reference="0Ro-GV-tHl"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="defaultImage.001" width="207.33332824707031" height="170.66667175292969"/>
+        <image name="info.circle" catalog="system" width="128" height="121"/>
         <namedColor name="Background">
             <color red="0.97600001096725464" green="0.9570000171661377" blue="0.93699997663497925" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

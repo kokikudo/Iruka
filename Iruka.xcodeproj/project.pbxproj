@@ -10,6 +10,7 @@
 		139062BA1D760ECC0383437D /* Pods_Iruka.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A7667B20CC5A2B8CD1F7974 /* Pods_Iruka.framework */; };
 		FD14C17C264BAAA800E751F8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FD14C17B264BAAA800E751F8 /* GoogleService-Info.plist */; };
 		FD461B60262D71AC00F736C6 /* ItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD461B5F262D71AB00F736C6 /* ItemTableViewCell.swift */; };
+		FD4B57EC26689180004D2484 /* toAppViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD4B57EB26689180004D2484 /* toAppViewController.swift */; };
 		FD55ED86262816520074530B /* RatingControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD55ED85262816520074530B /* RatingControl.swift */; };
 		FD629D74262133B5004948F8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD629D73262133B5004948F8 /* AppDelegate.swift */; };
 		FD629D7B262133B5004948F8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD629D79262133B5004948F8 /* Main.storyboard */; };
@@ -52,6 +53,7 @@
 		B1146E1020A899A04CB91057 /* Pods-Iruka.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Iruka.release.xcconfig"; path = "Target Support Files/Pods-Iruka/Pods-Iruka.release.xcconfig"; sourceTree = "<group>"; };
 		FD14C17B264BAAA800E751F8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		FD461B5F262D71AB00F736C6 /* ItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemTableViewCell.swift; sourceTree = "<group>"; };
+		FD4B57EB26689180004D2484 /* toAppViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = toAppViewController.swift; sourceTree = "<group>"; };
 		FD55ED85262816520074530B /* RatingControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingControl.swift; sourceTree = "<group>"; };
 		FD629D70262133B5004948F8 /* Iruka.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Iruka.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD629D73262133B5004948F8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -121,6 +123,14 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		FD4B57F0266899BB004D2484 /* Tutorial */ = {
+			isa = PBXGroup;
+			children = (
+				FD4B57EB26689180004D2484 /* toAppViewController.swift */,
+			);
+			path = Tutorial;
+			sourceTree = "<group>";
+		};
 		FD629D67262133B5004948F8 = {
 			isa = PBXGroup;
 			children = (
@@ -155,6 +165,7 @@
 				FD62C86F2625787A000B277A /* ItemTableViewController.swift */,
 				FD461B5F262D71AB00F736C6 /* ItemTableViewCell.swift */,
 				FD62C86726256245000B277A /* ItemEditPageViewController.swift */,
+				FD4B57F0266899BB004D2484 /* Tutorial */,
 				FD629D7C262133B9004948F8 /* Assets.xcassets */,
 				FD94A54D2665EBF8008782C7 /* SaveButton.swift */,
 				FD94A55A2665EE19008782C7 /* newDesjgnUITextField.swift */,
@@ -361,6 +372,7 @@
 				FD72EACD262C6232002D4C85 /* Item.swift in Sources */,
 				FD94A55B2665EE19008782C7 /* newDesjgnUITextField.swift in Sources */,
 				FD94A54E2665EBF8008782C7 /* SaveButton.swift in Sources */,
+				FD4B57EC26689180004D2484 /* toAppViewController.swift in Sources */,
 				FD62C86826256245000B277A /* ItemEditPageViewController.swift in Sources */,
 				FD461B60262D71AC00F736C6 /* ItemTableViewCell.swift in Sources */,
 				FDD24A3726670CFC0043BB32 /* MyUINavigationController.swift in Sources */,

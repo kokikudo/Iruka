@@ -16,24 +16,12 @@ class MyUINavigationController: UINavigationController {
         navigationBar.tintColor = UIColor(named: "ButtonText")
         navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
         
-        
-        switch navigationBar.restorationIdentifier {
-        case "homeNavigation":
-            print("gggg")
-        default:
-            print("aaa")
-        }
+//       Idによって処理を変えるコード。不要なら消す
+//        switch navigationBar.restorationIdentifier {
+//        case "homeNavigation":
+//            print("gggg")
+//        default:
+//            print("aaa")
+//        }
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

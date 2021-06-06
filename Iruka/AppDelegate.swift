@@ -29,6 +29,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             }
         }
         
+        // 初回起動かどうかのBool値をキーとともにUserDefaultsへセット
+        let ud = UserDefaults.standard
+        let firstLunchKey = "firstLunch"
+        let firstLunch = [firstLunchKey: true]
+        ud.register(defaults: firstLunch)
+        
         return true
     }
     // SceneDelegateを使わないため関連するメソッドを削除

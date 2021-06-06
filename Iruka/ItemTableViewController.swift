@@ -30,6 +30,14 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let ud = UserDefaults.standard
+        let firstLunchKey = "firstLunch"
+        if ud.bool(forKey: firstLunchKey) {
+            ud.setValue(false, forKeyPath: firstLunchKey)
+            ud.synchronize()
+            self.performSegue(withIdentifier: "toApp", sender: nil)
+        }
+        
         view.backgroundColor = UIColor(named: "Background")
         
         isAllEvaluationComplete = false
@@ -54,7 +62,7 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
             alertController.addAction(okAction)
             present(alertController, animated: true, completion: nil)
         }
-        navigationItem.title = "home"
+        setTitle()
         itemTableView.reloadData()
     }
     
@@ -157,6 +165,8 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
                 }
                 destnation.item = showList[indexPath.row]
             }
+        case "toApp":
+            print("チュートリアル表示")
         default:
             fatalError("segueのIDが一致しませんでした。")
         }
@@ -280,5 +290,18 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
             }
         }
         return result
+    }
+    @IBAction func showTutorial(_ sender: UIBarButtonItem) {
+        self.performSegue(withIdentifier: "toApp", sender: nil)
+    }
+    
+    // タイトルのセットアップ
+    private func setTitle() {
+        let titleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 28))
+        titleLabel.text = "Home"
+        titleLabel.textAlignment = .left
+        titleLabel.font = .systemFont(ofSize: 20, weight: .semibold)
+        titleLabel.textColor = UIColor(named: "ButtonText")
+        navigationItem.titleView = titleLabel
     }
 }
