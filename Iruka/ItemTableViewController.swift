@@ -62,7 +62,7 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
             alertController.addAction(okAction)
             present(alertController, animated: true, completion: nil)
         }
-        navigationItem.title = "home"
+        setTitle()
         itemTableView.reloadData()
     }
     
@@ -293,5 +293,15 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     @IBAction func showTutorial(_ sender: UIBarButtonItem) {
         self.performSegue(withIdentifier: "toApp", sender: nil)
+    }
+    
+    // タイトルのセットアップ
+    private func setTitle() {
+        let titleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 28))
+        titleLabel.text = "Home"
+        titleLabel.textAlignment = .left
+        titleLabel.font = .systemFont(ofSize: 20, weight: .semibold)
+        titleLabel.textColor = UIColor(named: "ButtonText")
+        navigationItem.titleView = titleLabel
     }
 }

@@ -12,6 +12,7 @@ class toAppViewController: UIViewController {
     private var pageViewController: UIPageViewController!
     private var controllers: [UIViewController] = []
     private var pageControl: UIPageControl!
+    private let imageCount = 4
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,7 +27,7 @@ class toAppViewController: UIViewController {
     private func initPageViewController() {
         
         // 画像がセットされたビューを配列に格納する関数
-        addingViewToArray(imageCount: 6)
+        addingViewToArray(imageCount: imageCount)
         
         // PageViewControllerの定義
         self.pageViewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
@@ -67,7 +68,7 @@ class toAppViewController: UIViewController {
             myViewController.view.backgroundColor = UIColor(named: "Background")
             
             // 画像を作成
-            let image = UIImage(named: "\(i)")!
+            let image = UIImage(named: "\(i).001")!
             let imageView = UIImageView(image: image)
             myViewController.view.addSubview(imageView)
             
@@ -90,7 +91,7 @@ class toAppViewController: UIViewController {
             // 最後のビューなら閉じるボタン追加
             if i == imageCount {
                 let button = UIButton()
-                button.setTitle("始める", for: .normal)
+                button.setTitle("閉じる", for: .normal)
                 button.setTitleColor(.white, for: .normal)
                 button.titleLabel?.font = UIFont.systemFont(ofSize: 20)
                 button.backgroundColor = UIColor(named: "Button")
