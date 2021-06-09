@@ -126,7 +126,7 @@ class ItemEditPageViewController: UIViewController, UIImagePickerControllerDeleg
     @objc func dismissKeyboard() {
         self.view.endEditing(true)
     }
-    // 金額と感想のキーボードにリターンボタンを追加
+    // 感想のキーボードにリターンボタンを追加
     func addReturnBotton() {
         let impressionTextToolber: UIToolbar = UIToolbar()
         let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
@@ -135,6 +135,8 @@ class ItemEditPageViewController: UIViewController, UIImagePickerControllerDeleg
                                                  style: .done,
                                                  target: self,
                                                  action: #selector(impressionTextShouldReturn))
+        impressionTextDone.tintColor = UIColor.white
+        impressionTextDone.setBackgroundImage((UIImage.colorImage(color: UIColor.blue, size: CGSize(width: 80, height: 40))), for: .normal, barMetrics: .default)
         impressionTextToolber.items = [space, impressionTextDone]
         impressionTextToolber.sizeToFit()
         impressionText.inputAccessoryView = impressionTextToolber
@@ -353,4 +355,29 @@ extension ItemEditPageViewController: UITextViewDelegate {
     }
 }
 
+// 完了ボタンのデザインを改良するため、色だけのUIImageを生成
+extension UIImage {
+    class func colorImage(color: UIColor, size: CGSize) -> UIImage {
+        
+        // ビットマップ形式のグラフィックコンテキストを生成しそれを現在のコンテキストにする(スタックの一番上に生成される。)
+        UIGraphicsBeginImageContext(size)
+        
+        // 座標空間を指定した短形(CGRectインスタンス)を生成
+        let rect = CGRect(origin: .zero, size: size)
+        
+        // 現在のコンテキスト(ビットマップ形式)をセット
+        let context = UIGraphicsGetCurrentContext()
+        // コンテキストの色
+        context!.setFillColor(color.cgColor)
+        // コンテキストの色で短形を塗りつぶす
+        context!.fill(rect)
+        
+        // コンテキストの内容をimage変数にセット
+        let image = UIGraphicsGetImageFromCurrentImageContext()
 
+        // スタックの一番上の（現在の）グラフィックコンテキストを削除し、作業を終える。
+        UIGraphicsEndImageContext()
+
+        return image!
+    }
+}

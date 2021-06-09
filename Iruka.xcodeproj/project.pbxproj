@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		139062BA1D760ECC0383437D /* Pods_Iruka.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A7667B20CC5A2B8CD1F7974 /* Pods_Iruka.framework */; };
 		FD14C17C264BAAA800E751F8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FD14C17B264BAAA800E751F8 /* GoogleService-Info.plist */; };
 		FD461B60262D71AC00F736C6 /* ItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD461B5F262D71AB00F736C6 /* ItemTableViewCell.swift */; };
 		FD4B57EC26689180004D2484 /* toAppViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD4B57EB26689180004D2484 /* toAppViewController.swift */; };
@@ -23,6 +22,8 @@
 		FD72EACD262C6232002D4C85 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD72EACC262C6232002D4C85 /* Item.swift */; };
 		FD94A54E2665EBF8008782C7 /* SaveButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD94A54D2665EBF8008782C7 /* SaveButton.swift */; };
 		FD94A55B2665EE19008782C7 /* newDesjgnUITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD94A55A2665EE19008782C7 /* newDesjgnUITextField.swift */; };
+		FD99BB60266F370D00FA2A30 /* Pods_Iruka.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A7667B20CC5A2B8CD1F7974 /* Pods_Iruka.framework */; };
+		FD99BB61266F370D00FA2A30 /* Pods_Iruka.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0A7667B20CC5A2B8CD1F7974 /* Pods_Iruka.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FDD24A3726670CFC0043BB32 /* MyUINavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD24A3626670CFC0043BB32 /* MyUINavigationController.swift */; };
 /* End PBXBuildFile section */
 
@@ -42,6 +43,20 @@
 			remoteInfo = Iruka;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		FD99BB62266F370D00FA2A30 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				FD99BB61266F370D00FA2A30 /* Pods_Iruka.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		0A7667B20CC5A2B8CD1F7974 /* Pods_Iruka.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Iruka.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -81,7 +96,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				139062BA1D760ECC0383437D /* Pods_Iruka.framework in Frameworks */,
+				FD99BB60266F370D00FA2A30 /* Pods_Iruka.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -206,6 +221,7 @@
 				FD629D6D262133B5004948F8 /* Frameworks */,
 				FD629D6E262133B5004948F8 /* Resources */,
 				55DA38502F47AE1F4CB74D8A /* [CP] Embed Pods Frameworks */,
+				FD99BB62266F370D00FA2A30 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -544,6 +560,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
