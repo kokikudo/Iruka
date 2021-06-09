@@ -7,6 +7,8 @@
 
 import UIKit
 import UserNotifications
+import Firebase
+import GoogleMobileAds
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
@@ -34,6 +36,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         let firstLunchKey = "firstLunch"
         let firstLunch = [firstLunchKey: true]
         ud.register(defaults: firstLunch)
+        
+        // Use Firebase library to configure APIs.
+        FirebaseApp.configure()
+
+        // Initialize the Google Mobile Ads SDK.
+        //GADMobileAds.sharedInstance().start(completionHandler: nil)
         
         return true
     }
