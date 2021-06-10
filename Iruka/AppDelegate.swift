@@ -9,6 +9,8 @@ import UIKit
 import UserNotifications
 import Firebase
 import GoogleMobileAds
+import AppTrackingTransparency
+import AdSupport
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
@@ -37,11 +39,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         let firstLunch = [firstLunchKey: true]
         ud.register(defaults: firstLunch)
         
-        // Use Firebase library to configure APIs.
+        // 広告表示の設定
+        // Firebaseに広告をリンクさせているためFirebaseを設定
         FirebaseApp.configure()
-
-        // Initialize the Google Mobile Ads SDK.
-        GADMobileAds.sharedInstance().start(completionHandler: nil)
+        // GoogleAdMobSDKの初期化。ios14以降はユーザーの許可が必要。
+        if #available(iOS 14, *) {
+            ATTrackingManager.requestTrackingAuthorization() { status in
+                GADMobileAds.sharedInstance().start(completionHandler: nil)
+            }
+        } else {
+            GADMobileAds.sharedInstance().start(completionHandler: nil)
+        }
+        
         
         return true
     }
