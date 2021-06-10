@@ -7,8 +7,9 @@
 
 import UIKit
 import RealmSwift
+import GoogleMobileAds
 
-class ItemTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
+class ItemTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, GADFullScreenContentDelegate {
     
     // outlets
     @IBOutlet var itemTableView: UITableView!
@@ -27,8 +28,15 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
     // 全評価完了
     private var isAllEvaluationComplete: Bool!
     
+    // インタースティシャル広告
+    var interstitial: GADInterstitialAd!
+    // このViewが3回表示されるたびに広告を表示
+    var intervalDisplayAd: Int = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        createInterstitial()
         
         let ud = UserDefaults.standard
         let firstLunchKey = "firstLunch"
@@ -57,7 +65,7 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
         // 評価が終わったら前リスト表示
         if isAllEvaluationComplete {
             showList = toggleShowList()
-            let alertController = UIAlertController(title: "テスト", message: "評価完了", preferredStyle: .alert)
+            let alertController = UIAlertController(title: "評価完了", message: "お疲れ様でした。今後の買い物の参考になれば幸いです", preferredStyle: .alert)
             let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
             alertController.addAction(okAction)
             present(alertController, animated: true, completion: nil)
@@ -66,8 +74,54 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
         itemTableView.reloadData()
     }
     
-    // MARK: - Table view data source
+    // 4回に1回、Viewが表示されるたびに広告を表示
+    // アプリ起動時と広告を閉じるときに一回呼び出されるため、実質3回。
+    override func viewDidAppear(_ animated: Bool) {
+        intervalDisplayAd += 1
+        if intervalDisplayAd % 4 == 0 {
+            presentAd()
+        }
+    }
     
+    // 公式ガイドの書き方
+    func createInterstitial(){
+        let request = GADRequest()
+        GADInterstitialAd.load(withAdUnitID:"ca-app-pub-3940256099942544/4411468910",
+                               request: request) { [self] ad, error in
+            if let error = error {
+                print("Failed to load interstitial ad with error: \(error.localizedDescription)")
+                return
+            }
+            interstitial = ad
+            interstitial.fullScreenContentDelegate = self
+        }
+    }
+    
+    func presentAd() {
+        if interstitial != nil {
+            interstitial.present(fromRootViewController: self)
+            createInterstitial()
+        } else {
+            print("Ad wasn't ready")
+        }
+    }
+    
+    /// Tells the delegate that the ad failed to present full screen content.
+    func ad(_ ad: GADFullScreenPresentingAd, didFailToPresentFullScreenContentWithError error: Error) {
+        print("Ad did fail to present full screen content.")
+    }
+    
+    /// Tells the delegate that the ad presented full screen content.
+    func adDidPresentFullScreenContent(_ ad: GADFullScreenPresentingAd) {
+        print("Ad did present full screen content.")
+    }
+    
+    /// Tells the delegate that the ad dismissed full screen content.
+    func adDidDismissFullScreenContent(_ ad: GADFullScreenPresentingAd) {
+        print("Ad did dismiss full screen content.")
+    }
+    
+    // MARK: - Table view data source
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         showList.count
     }
@@ -107,7 +161,6 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
         searchController = UISearchController(searchResultsController: nil)
         searchController.hidesNavigationBarDuringPresentation = true
         searchController.searchBar.placeholder = "名前で検索します"
-        
         searchController.searchBar.delegate = self
     }
     
@@ -174,7 +227,6 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
     
     // 保存ボタンが押されてこのページに戻ってきた時に実行。TableViewを更新する
     @IBAction func unwindToItemList(sender: UIStoryboardSegue) {
-        
         // プライマリキーの有無で新規登録か既存の編集を判断し、Realmを更新する。
         if let sourceViewController = sender.source as? ItemEditPageViewController {
             
@@ -207,7 +259,6 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
             // 通知登録
             setNotification(date: item.date)
         }
-        
     }
     
     // ローカル通知
