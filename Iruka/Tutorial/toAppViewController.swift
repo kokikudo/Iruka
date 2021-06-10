@@ -12,15 +12,13 @@ class toAppViewController: UIViewController {
     private var pageViewController: UIPageViewController!
     private var controllers: [UIViewController] = []
     private var pageControl: UIPageControl!
-    private let imageCount = 4
+    private let imageCount = 6
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         initPageViewController()
-        
-        //
-        self.setPageControl()
+        setPageControl()
     }
     
     //　UIPageViewControllerを定義
@@ -75,7 +73,7 @@ class toAppViewController: UIViewController {
             // アスペクト比を崩さずに最大まで拡大
             imageView.contentMode = .scaleAspectFit
             
-            // 制約を決める: 最初に自動でレイアウトを決めてくれる機能を無効にする
+            // 制約設定。最初に自動でレイアウトを決めてくれる機能を無効にする
             imageView.translatesAutoresizingMaskIntoConstraints = false
             NSLayoutConstraint.activate([
                 // サイズ
