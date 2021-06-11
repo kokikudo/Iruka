@@ -25,9 +25,6 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
     // Realmオブジェクト
     private var realm = try! Realm()
     
-    // 全評価完了
-    private var isAllEvaluationComplete: Bool!
-    
     // インタースティシャル広告
     var interstitial: GADInterstitialAd!
     // このViewが3回表示されるたびに広告を表示
@@ -48,7 +45,6 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
         
         view.backgroundColor = UIColor(named: "Background")
         
-        isAllEvaluationComplete = false
         print(realm.configuration.fileURL!)
         
         self.itemTableView.delegate = self
@@ -59,16 +55,28 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
         
         showList = toggleShowList()
         setupSearchController()
+        
+        // Realmにデータを追加した時の通知
+//        let token = allList.observe() { change in
+//            switch change {
+//            case .update(self.allList, deletions: [0], insertions: [1], modifications: [0]):
+//                self.setNotification(date: Date())
+//            default:
+//                break
+//            }
+//
+//
+//        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        // 評価が終わったら前リスト表示
-        if isAllEvaluationComplete {
-            showList = toggleShowList()
+        // 評価が終わったらallList表示
+        if showList.count == 0, allList.count > 0 {
             let alertController = UIAlertController(title: "評価完了", message: "お疲れ様でした。今後の買い物の参考になれば幸いです", preferredStyle: .alert)
             let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
             alertController.addAction(okAction)
             present(alertController, animated: true, completion: nil)
+            showList = toggleShowList()
         }
         setTitle()
         itemTableView.reloadData()
@@ -196,9 +204,9 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
             self.navigationItem.rightBarButtonItems?[1].isEnabled = true
             list = allList
         }
-        let result = list.sorted(byKeyPath: "date", ascending: false)
+        let showList = list.sorted(byKeyPath: "date", ascending: false)
         
-        return result
+        return showList
     }
     
     // セルをタップしたらその商品の編集画面に移動
@@ -251,13 +259,18 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
             // すでにIDがある時はそれを代入。ないときは一意の文字列を取得。
             item.id = sourceViewController.item?.id ?? NSUUID().uuidString
             
+            let beforeAddCount = realm.objects(Item.self).count
+            
             // Realm更新。
             try! realm.write {
                 realm.add(item, update: .modified) // .modified: IDがない時は追加。ある時は更新。
             }
             
-            // 通知登録
-            setNotification(date: item.date)
+            if realm.objects(Item.self).count > beforeAddCount {
+                // 通知登録:テストが終わったらitem.dateにかえる
+                setNotification(date: Date())
+            }
+            
         }
     }
     
@@ -269,7 +282,7 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
         let month = current.component(.month, from: date)
         let day = current.component(.day, from: date)
         
-        // テスト用に1分後に通知が行くようにする
+        // テスト用に1分後に通知が行くようにする:テストが終わったら夜10に変更する
         let hour = current.component(.hour, from: date)
         let minute = current.component(.minute, from: date)
         let dateComp = DateComponents(year: year,
@@ -309,7 +322,7 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
         // あればアラート
         if result.count > 0 {
             // アラート
-            let alertController = UIAlertController(title: "テスト", message: "評価対象商品: \(result.count)", preferredStyle: .alert)
+            let alertController = UIAlertController(title: "評価しましょう！", message: "評価対象商品: \(result.count)", preferredStyle: .alert)
             let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
             alertController.addAction(okAction)
             present(alertController, animated: true, completion: nil)
@@ -328,8 +341,6 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
         let comps = calendar.dateComponents([.year, .month, .day], from: Date())
         let dateBefore1Year = calendar.date(from: DateComponents(year: comps.year! - 1, month: comps.month, day: comps.day, hour: 23, minute: 59, second: 59))
         let convertedDB1Y = dateBefore1Year!.timeIntervalSince1970
-        print("今日の日付：\(Item.convertDateIntoDouble(date: Date()))")
-        print("去年の日付：\(convertedDB1Y)")
         
         // 条件を指定し検索
         let result = items.filter("dateSecond <= %@", convertedDB1Y).filter("isCompletedEvaluation == NO")
@@ -342,6 +353,7 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
         }
         return result
     }
+    
     @IBAction func showTutorial(_ sender: UIBarButtonItem) {
         self.performSegue(withIdentifier: "toApp", sender: nil)
     }

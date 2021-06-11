@@ -38,8 +38,8 @@ class ItemEditPageViewController: UIViewController, UIImagePickerControllerDeleg
     var beforeRating = 0
     var afterRating = 0
     
-    // test date
-    let testDate = Item.createDateObject(year: 2020, month: 4, day: 20)
+    // test date　テストが終わったら消す
+    let testDate = Item.createDateObject(year: 2020, month: 6, day: 11)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -108,7 +108,7 @@ class ItemEditPageViewController: UIViewController, UIImagePickerControllerDeleg
         } else {
             navigationItem.title = "新規登録"
             // 現在日時を取得
-            registrationTimeText.text = Item.convertDateIntoString(date: Date())
+            registrationTimeText.text = Item.convertDateIntoString(date: testDate)
         }
     }
     
@@ -187,7 +187,12 @@ class ItemEditPageViewController: UIViewController, UIImagePickerControllerDeleg
         else {
             fatalError("画像の取得に失敗しました")
         }
-        photoImage.image = selectedImage
+        
+        if (selectedImage.pngData()?.count)! > 2097152 {
+            photoImage.image = selectedImage.resize()
+        } else {
+            photoImage.image = selectedImage
+        }
         
         dismiss(animated: true, completion: nil)
     }
@@ -379,5 +384,18 @@ extension UIImage {
         UIGraphicsEndImageContext()
 
         return image!
+    }
+    
+    // リサイズ
+    func resize() -> UIImage? {
+        let oldSize = self.size
+        let newSize = CGSize(width: 800, height: oldSize.height / oldSize.width * 800)
+        
+        UIGraphicsBeginImageContext(newSize)
+        draw(in: CGRect(origin: .zero, size: newSize))
+        let resizendImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return resizendImage
     }
 }
