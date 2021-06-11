@@ -14,7 +14,6 @@ class ItemTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
         
         self.backgroundColor = UIColor(named: "Background")
         itemNameText.textColor = UIColor(named: "Text")
@@ -23,8 +22,6 @@ class ItemTableViewCell: UITableViewCell {
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        
-        // Configure the view for the selected state
     }
     
 }

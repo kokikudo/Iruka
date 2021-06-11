@@ -35,6 +35,7 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
         
         createInterstitial()
         
+        // 初回起動の時のみチュートリアル表示
         let ud = UserDefaults.standard
         let firstLunchKey = "firstLunch"
         if ud.bool(forKey: firstLunchKey) {
@@ -43,36 +44,27 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
             self.performSegue(withIdentifier: "toApp", sender: nil)
         }
         
+        // 背景色設定
         view.backgroundColor = UIColor(named: "Background")
         
-        print(realm.configuration.fileURL!)
-        
+        // デリゲート
         self.itemTableView.delegate = self
         self.itemTableView.dataSource = self
         
+        // 商品リストにデータを格納
         allList = realm.objects(Item.self)
         needToBeEvaluatedList = confirmEvaluationTargetItem()
         
+        // ビューに表示するリストを選定
         showList = toggleShowList()
-        setupSearchController()
         
-        // Realmにデータを追加した時の通知
-//        let token = allList.observe() { change in
-//            switch change {
-//            case .update(self.allList, deletions: [0], insertions: [1], modifications: [0]):
-//                self.setNotification(date: Date())
-//            default:
-//                break
-//            }
-//
-//
-//        }
+        setupSearchController()
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        // 評価が終わったらallList表示
+        // 評価が終わったらアラート表示しリスト更新。
         if showList.count == 0, allList.count > 0 {
-            let alertController = UIAlertController(title: "評価完了", message: "お疲れ様でした。今後の買い物の参考になれば幸いです", preferredStyle: .alert)
+            let alertController = UIAlertController(title: "全商品の評価完了", message: "お疲れ様でした。今後の買い物の参考になれば幸いです", preferredStyle: .alert)
             let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
             alertController.addAction(okAction)
             present(alertController, animated: true, completion: nil)
@@ -90,9 +82,53 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
             presentAd()
         }
     }
+
+    //  Tableview datasource
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        showList.count
+    }
     
-    // 公式ガイドの書き方
-    func createInterstitial(){
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        guard let cell = self.itemTableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? ItemTableViewCell else {
+            fatalError("セルのダウンキャストに失敗しました")
+        }
+        
+        let item = showList[indexPath.row]
+        
+        cell.registrationTimeText.text = Item.convertDateIntoString(date: item.date)
+        cell.photoImage.image = UIImage(data: item.photoImage)
+        cell.itemNameText.text = item.name
+        
+        return cell
+    }
+    
+    // TableViewDelegate
+    // セルの編集許可。削除機能に必要。
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    // スワイプするとデータを削除できる
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        
+        try! realm.write {
+            realm.delete(showList[indexPath.row])
+        }
+        
+        self.itemTableView.deleteRows(at: [indexPath], with: .automatic)
+    }
+    
+    //　SearchControllerのセットアップ
+    private func setupSearchController() {
+        searchController = UISearchController(searchResultsController: nil)
+        searchController.hidesNavigationBarDuringPresentation = true
+        searchController.searchBar.placeholder = "商品名で検索"
+        searchController.searchBar.delegate = self
+    }
+    
+    // private mathod
+    // インタースティシャル広告作成
+    private func createInterstitial(){
         let request = GADRequest()
         GADInterstitialAd.load(withAdUnitID:"ca-app-pub-3940256099942544/4411468910",
                                request: request) { [self] ad, error in
@@ -105,7 +141,8 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
         }
     }
     
-    func presentAd() {
+    // 広告表示
+    private func presentAd() {
         if interstitial != nil {
             interstitial.present(fromRootViewController: self)
             createInterstitial()
@@ -129,50 +166,6 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
         print("Ad did dismiss full screen content.")
     }
     
-    // MARK: - Table view data source
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        showList.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        guard let cell = self.itemTableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? ItemTableViewCell else {
-            fatalError("セルのダウンキャストに失敗しました")
-        }
-        
-        let item = showList[indexPath.row]
-        
-        cell.registrationTimeText.text = Item.convertDateIntoString(date: item.date)
-        cell.photoImage.image = UIImage(data: item.photoImage)
-        cell.itemNameText.text = item.name
-        
-        return cell
-    }
-    
-    // セルの編集許可。削除機能に必要。
-    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    
-    // スワイプするとデータを削除できる
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        
-        try! realm.write {
-            realm.delete(showList[indexPath.row])
-        }
-        
-        self.itemTableView.deleteRows(at: [indexPath], with: .automatic)
-    }
-    
-    
-    private func setupSearchController() {
-        searchController = UISearchController(searchResultsController: nil)
-        searchController.hidesNavigationBarDuringPresentation = true
-        searchController.searchBar.placeholder = "名前で検索します"
-        searchController.searchBar.delegate = self
-    }
-    
-    // private mathod
     @IBAction func searchBar(_ sender: UIBarButtonItem) {
         present(searchController, animated: true, completion: nil)
     }
@@ -270,7 +263,6 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
                 // 通知登録:テストが終わったらitem.dateにかえる
                 setNotification(date: Date())
             }
-            
         }
     }
     
@@ -314,7 +306,7 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     // アプリ起動時に実行。評価対象商品があれば表示リストに適用。
-    func confirmEvaluationTargetItem() -> Results<Item> {
+    private func confirmEvaluationTargetItem() -> Results<Item> {
         
         // 評価対象の絞り込み
         let result = select(items: allList)
@@ -334,7 +326,7 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
         return result
     }
     // 2つの条件を満たした商品を絞り込む(去年以前であること、評価が終わってないこと)
-    func select(items: Results<Item>) -> Results<Item> {
+    private func select(items: Results<Item>) -> Results<Item> {
         
         // 去年の日付の23時59分59秒より以前
         let calendar = Calendar(identifier: .gregorian)

@@ -315,17 +315,12 @@
                     <size key="freeformSize" width="414" height="1250"/>
                     <connections>
                         <outlet property="changeButton" destination="Mzc-91-CIe" id="oFc-My-zOh"/>
-                        <outlet property="impressionLabel" destination="jF6-4k-XYd" id="7br-bn-MKJ"/>
                         <outlet property="impressionText" destination="mO2-sc-upE" id="iBK-pt-gMb"/>
                         <outlet property="impressionWordCountLabel" destination="LTN-10-RBl" id="dBL-hJ-ZTf"/>
-                        <outlet property="nameLabel" destination="WDb-QF-JGp" id="Lec-Dd-ILQ"/>
                         <outlet property="nameText" destination="Kre-WS-Dah" id="4E9-3F-YkK"/>
                         <outlet property="photoImage" destination="kHB-kP-gJD" id="JmU-8k-irI"/>
-                        <outlet property="priceLabel" destination="6wC-zn-xPy" id="CvH-U8-6At"/>
                         <outlet property="priceText" destination="8Ab-99-0rY" id="Cke-wH-TKt"/>
                         <outlet property="ratingCount" destination="xrd-iZ-db3" id="JoU-DE-Fw7"/>
-                        <outlet property="ratingLabel" destination="zR1-xe-vOq" id="iZT-ep-mEe"/>
-                        <outlet property="registrationTimeLabel" destination="dbV-V0-5I5" id="EOh-hq-2ey"/>
                         <outlet property="registrationTimeText" destination="BXr-Q7-itK" id="Cg2-yJ-7cs"/>
                         <outlet property="saveButton" destination="YJV-dh-edd" id="r9r-18-7uz"/>
                         <outlet property="wordCountLabel" destination="nMy-4n-aZB" id="tz6-4Z-ObD"/>
@@ -398,7 +393,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="0Ro-GV-tHl"/>
+        <segue reference="Nno-hQ-RLg"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="defaultImage.001" width="510" height="434"/>

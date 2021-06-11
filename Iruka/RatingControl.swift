@@ -36,8 +36,8 @@ import UIKit
         super.init(frame: frame)
         setupButtons() // ボタン生成
     }
-     // required initが定義されてるNSCodingプロトコルがUIViewで定義されており、UIViewを継承しているUIStackViewでも定義する
-     // 通常、初期化しない場合は不要だが、指定イニシャライザを定義する場合はこちらも定義するのがるーるらしい
+    // required initが定義されてるNSCodingプロトコルがUIViewで定義されており、UIViewを継承しているUIStackViewでも定義する
+    // 通常、初期化しない場合は不要だが、指定イニシャライザを定義する場合はこちらも定義するのがるーるらしい
     required init(coder: NSCoder) { // NSCoder: クラスをアーカイブに保存するための型
         super.init(coder: coder)
         setupButtons() // こっちにも同じ処理
@@ -131,5 +131,4 @@ import UIKit
             button.accessibilityValue = valueString
         }
     }
-    
 }
