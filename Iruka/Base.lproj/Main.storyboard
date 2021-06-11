@@ -112,7 +112,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="1300"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="eIH-Vy-dVG">
-                                                <rect key="frame" x="30" y="8" width="354" height="914.66666666666663"/>
+                                                <rect key="frame" x="30" y="8" width="354" height="884.66666666666663"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="843-UV-ifI" userLabel="Registration Stack">
                                                         <rect key="frame" x="127.66666666666666" y="0.0" width="98.666666666666657" height="18"/>
@@ -131,18 +131,20 @@
                                                             </label>
                                                         </subviews>
                                                     </stackView>
-                                                    <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="398" placeholderIntrinsicHeight="398" image="defaultImage.001" translatesAutoresizingMaskIntoConstraints="NO" id="kHB-kP-gJD" userLabel="photoImage">
-                                                        <rect key="frame" x="0.0" y="48" width="354" height="354"/>
+                                                    <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="defaultImage.001" translatesAutoresizingMaskIntoConstraints="NO" id="kHB-kP-gJD" userLabel="photoImage">
+                                                        <rect key="frame" x="15" y="48" width="324" height="324"/>
                                                         <gestureRecognizers/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" secondItem="kHB-kP-gJD" secondAttribute="height" multiplier="1:1" id="0Xz-DQ-pNB"/>
+                                                            <constraint firstAttribute="height" relation="lessThanOrEqual" constant="500" id="7Oo-Jz-xV7"/>
+                                                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="500" id="pUi-to-MsX"/>
                                                         </constraints>
                                                         <connections>
                                                             <outletCollection property="gestureRecognizers" destination="3sy-WS-dbt" appends="YES" id="8K2-jq-TP2"/>
                                                         </connections>
                                                     </imageView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="77u-eT-OR1" userLabel="Name Stack">
-                                                        <rect key="frame" x="0.0" y="432" width="354" height="79.333333333333314"/>
+                                                        <rect key="frame" x="0.0" y="402" width="354" height="79.333333333333314"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="商品名" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WDb-QF-JGp">
                                                                 <rect key="frame" x="0.0" y="0.0" width="354" height="20.333333333333332"/>
@@ -168,7 +170,7 @@
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="Rj3-uH-JCZ" userLabel="Price Stack">
-                                                        <rect key="frame" x="0.0" y="541.33333333333337" width="354" height="58.333333333333371"/>
+                                                        <rect key="frame" x="0.0" y="511.33333333333331" width="354" height="58.333333333333314"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="金額" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6wC-zn-xPy">
                                                                 <rect key="frame" x="0.0" y="0.0" width="354" height="20.333333333333332"/>
@@ -188,7 +190,7 @@
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="IGz-yI-nJP" userLabel="Impression Stack">
-                                                        <rect key="frame" x="0.0" y="629.66666666666663" width="354" height="205"/>
+                                                        <rect key="frame" x="0.0" y="599.66666666666663" width="354" height="205"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="js4-3X-ABH">
                                                                 <rect key="frame" x="0.0" y="0.0" width="354" height="31"/>
@@ -226,16 +228,16 @@
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="1fF-MJ-kLH" userLabel="Rating Stack ">
-                                                        <rect key="frame" x="0.0" y="864.66666666666663" width="354" height="50"/>
+                                                        <rect key="frame" x="0.0" y="834.66666666666663" width="354" height="50"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="評価" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zR1-xe-vOq">
-                                                                <rect key="frame" x="0.0" y="0.0" width="34.666666666666664" height="50"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="99" height="50"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                 <color key="textColor" name="Text"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xrd-iZ-db3" customClass="RatingControl" customModule="Iruka" customModuleProvider="target">
-                                                                <rect key="frame" x="39.666666666666657" y="0.0" width="314.33333333333337" height="50"/>
+                                                                <rect key="frame" x="104" y="0.0" width="250" height="50"/>
                                                                 <userDefinedRuntimeAttributes>
                                                                     <userDefinedRuntimeAttribute type="size" keyPath="starSize">
                                                                         <size key="value" width="50" height="50"/>
@@ -249,6 +251,8 @@
                                                 <constraints>
                                                     <constraint firstItem="IGz-yI-nJP" firstAttribute="leading" secondItem="eIH-Vy-dVG" secondAttribute="leading" id="4JC-zd-iM2"/>
                                                     <constraint firstAttribute="trailing" secondItem="Rj3-uH-JCZ" secondAttribute="trailing" id="C2Q-xV-P6J"/>
+                                                    <constraint firstItem="kHB-kP-gJD" firstAttribute="leading" secondItem="eIH-Vy-dVG" secondAttribute="leading" constant="15" id="P8u-xp-Tcd"/>
+                                                    <constraint firstAttribute="trailing" secondItem="kHB-kP-gJD" secondAttribute="trailing" constant="15" id="Rra-ya-1rm"/>
                                                     <constraint firstItem="Rj3-uH-JCZ" firstAttribute="leading" secondItem="eIH-Vy-dVG" secondAttribute="leading" id="U1x-nN-97l"/>
                                                     <constraint firstItem="77u-eT-OR1" firstAttribute="leading" secondItem="eIH-Vy-dVG" secondAttribute="leading" id="iYo-ec-P8D"/>
                                                     <constraint firstAttribute="trailing" secondItem="77u-eT-OR1" secondAttribute="trailing" id="lOm-XF-NFq"/>
@@ -258,7 +262,7 @@
                                                 </constraints>
                                             </stackView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YJV-dh-edd" customClass="SaveButton" customModule="Iruka" customModuleProvider="target">
-                                                <rect key="frame" x="132" y="972.66666666666674" width="150" height="50"/>
+                                                <rect key="frame" x="132" y="942.66666666666674" width="150" height="50"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="32l-SS-FOV"/>
                                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="150" id="5Gn-xu-qko"/>
@@ -394,10 +398,10 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Nno-hQ-RLg"/>
+        <segue reference="0Ro-GV-tHl"/>
     </inferredMetricsTieBreakers>
     <resources>
-        <image name="defaultImage.001" width="207.33332824707031" height="170.66667175292969"/>
+        <image name="defaultImage.001" width="510" height="434"/>
         <image name="info.circle" catalog="system" width="128" height="121"/>
         <namedColor name="Background">
             <color red="0.97600001096725464" green="0.9570000171661377" blue="0.93699997663497925" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

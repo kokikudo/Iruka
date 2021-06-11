@@ -3,8 +3,8 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -16,15 +16,21 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="test_icon" translatesAutoresizingMaskIntoConstraints="NO" id="SAh-dZ-07Y">
-                                <rect key="frame" x="79" y="320" width="256" height="256"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="rogo.001" translatesAutoresizingMaskIntoConstraints="NO" id="9G2-7o-GPc">
+                                <rect key="frame" x="32" y="273" width="350" height="350"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="350" id="0l6-wQ-vhq"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="350" id="Sax-cn-lvL"/>
+                                </constraints>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" name="Navigation"/>
                         <constraints>
-                            <constraint firstItem="SAh-dZ-07Y" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="5ZD-eg-HJN"/>
-                            <constraint firstItem="SAh-dZ-07Y" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="qfm-p1-UqE"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="9G2-7o-GPc" secondAttribute="trailing" constant="32" id="14s-Zl-e0p"/>
+                            <constraint firstItem="9G2-7o-GPc" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="229" id="LDE-wG-Rhx"/>
+                            <constraint firstItem="9G2-7o-GPc" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="32" id="UaD-bq-zX4"/>
+                            <constraint firstItem="9G2-7o-GPc" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="spL-ds-lLH"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -34,9 +40,9 @@
         </scene>
     </scenes>
     <resources>
-        <image name="test_icon" width="256" height="256"/>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
+        <image name="rogo.001" width="2268" height="2268"/>
+        <namedColor name="Navigation">
+            <color red="0.44299998879432678" green="0.37599998712539673" blue="0.25099998712539673" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
     </resources>
 </document>
