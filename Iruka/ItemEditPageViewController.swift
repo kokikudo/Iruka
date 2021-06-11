@@ -10,17 +10,12 @@ import UIKit
 class ItemEditPageViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     //Propaties
-    @IBOutlet weak var registrationTimeLabel: UILabel!
     @IBOutlet weak var registrationTimeText: UILabel!
     @IBOutlet weak var photoImage: UIImageView!
-    @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var nameText: newDesjgnUITextField!
     @IBOutlet weak var wordCountLabel: UILabel!
     private let itemNameTextMaxCount = 40
-    @IBOutlet weak var priceLabel: UILabel!
     @IBOutlet weak var priceText: newDesjgnUITextField!
-    @IBOutlet weak var ratingLabel: UILabel!
-    @IBOutlet weak var impressionLabel: UILabel!
     @IBOutlet weak var changeButton: UISwitch!
     @IBOutlet weak var impressionText: UITextView!
     @IBOutlet weak var impressionWordCountLabel: UILabel!
@@ -28,7 +23,6 @@ class ItemEditPageViewController: UIViewController, UIImagePickerControllerDeleg
     private let impressionPlaceHolderText = "未入力"
     @IBOutlet weak var ratingCount: RatingControl!
     @IBOutlet weak var saveButton: SaveButton!
-    
     
     var item: Item?
     
