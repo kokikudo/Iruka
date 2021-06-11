@@ -32,9 +32,6 @@ class ItemEditPageViewController: UIViewController, UIImagePickerControllerDeleg
     var beforeRating = 0
     var afterRating = 0
     
-    // test date　テストが終わったら消す
-    let testDate = Item.createDateObject(year: 2020, month: 6, day: 11)
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -102,7 +99,7 @@ class ItemEditPageViewController: UIViewController, UIImagePickerControllerDeleg
         } else {
             navigationItem.title = "新規登録"
             // 現在日時を取得
-            registrationTimeText.text = Item.convertDateIntoString(date: testDate)
+            registrationTimeText.text = Item.convertDateIntoString(date: Date())
         }
     }
     
@@ -215,8 +212,7 @@ class ItemEditPageViewController: UIViewController, UIImagePickerControllerDeleg
     
     // キャンセルボタンの挙動。新規登録と既存の編集で処理を変える
     @IBAction func cancel(_ sender: UIBarButtonItem) {
-        
-        // 
+    
         let isPresentingInAddItemMode = presentingViewController is UINavigationController
         
         if isPresentingInAddItemMode {
