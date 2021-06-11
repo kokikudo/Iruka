@@ -130,7 +130,7 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
     // インタースティシャル広告作成
     private func createInterstitial(){
         let request = GADRequest()
-        GADInterstitialAd.load(withAdUnitID:"ca-app-pub-3940256099942544/4411468910",
+        GADInterstitialAd.load(withAdUnitID:"ca-app-pub-1224671279223808~7472614300",
                                request: request) { [self] ad, error in
             if let error = error {
                 print("Failed to load interstitial ad with error: \(error.localizedDescription)")
@@ -275,13 +275,11 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
         let day = current.component(.day, from: date)
         
         // テスト用に1分後に通知が行くようにする:テストが終わったら夜10に変更する
-        let hour = current.component(.hour, from: date)
-        let minute = current.component(.minute, from: date)
-        let dateComp = DateComponents(year: year,
+        let dateComp = DateComponents(year: year + 1,
                                       month: month,
                                       day: day,
-                                      hour: hour,
-                                      minute: minute + 1)
+                                      hour: 22,
+                                      minute: 0)
         
         let trigger = UNCalendarNotificationTrigger(dateMatching: dateComp, repeats: false)
         
