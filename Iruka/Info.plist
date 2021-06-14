@@ -36,9 +36,9 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>カメラへのアクセスを許可しますか？</string>
+	<string>商品を撮影し、画像として保存するためにカメラを利用します。</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>ライブラリへのアクセスを許可しますか？</string>
+	<string>既存の写真を商品の画像として保存するためにライブラリにアクセスします。</string>
 	<key>NSUserTrackingUsageDescription</key>
 	<string>お客様の興味関心に合わせた広告を表示するために利用します</string>
 	<key>SKAdNetworkItems</key>
