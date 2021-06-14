@@ -130,7 +130,7 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
     // インタースティシャル広告作成
     private func createInterstitial(){
         let request = GADRequest()
-        GADInterstitialAd.load(withAdUnitID:"ca-app-pub-1224671279223808~7472614300",
+        GADInterstitialAd.load(withAdUnitID:"ca-app-pub-3940256099942544/4411468910",
                                request: request) { [self] ad, error in
             if let error = error {
                 print("Failed to load interstitial ad with error: \(error.localizedDescription)")
