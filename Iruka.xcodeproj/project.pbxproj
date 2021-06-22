@@ -24,7 +24,7 @@
 		FD733E772671DD6E00ABBA4F /* AppIcon.appiconset in Resources */ = {isa = PBXBuildFile; fileRef = FD733E762671DD6E00ABBA4F /* AppIcon.appiconset */; };
 		FD94A54E2665EBF8008782C7 /* SaveButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD94A54D2665EBF8008782C7 /* SaveButton.swift */; };
 		FD94A55B2665EE19008782C7 /* newDesjgnUITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD94A55A2665EE19008782C7 /* newDesjgnUITextField.swift */; };
-		FD99BB61266F370D00FA2A30 /* BuildFile in Embed Frameworks */ = {isa = PBXBuildFile; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FD99BB61266F370D00FA2A30 /* (null) in Embed Frameworks */ = {isa = PBXBuildFile; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FDD24A3726670CFC0043BB32 /* MyUINavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD24A3626670CFC0043BB32 /* MyUINavigationController.swift */; };
 /* End PBXBuildFile section */
 
@@ -52,7 +52,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				FD99BB61266F370D00FA2A30 /* BuildFile in Embed Frameworks */,
+				FD99BB61266F370D00FA2A30 /* (null) in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -575,12 +575,14 @@
 				CODE_SIGN_ENTITLEMENTS = Iruka/Iruka.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = S3ZNGP43TF;
 				INFOPLIST_FILE = Iruka/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = kokikudo.first.app.Iruka;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = aaaaaaaaabbbbbbb;
@@ -598,12 +600,14 @@
 				CODE_SIGN_ENTITLEMENTS = Iruka/Iruka.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = S3ZNGP43TF;
 				INFOPLIST_FILE = Iruka/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = kokikudo.first.app.Iruka;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = aaaaaaaaabbbbbbb;

@@ -9,6 +9,7 @@ import UIKit
 import UserNotifications
 import Firebase
 import GoogleMobileAds
+import FirebaseAnalytics
 import AppTrackingTransparency
 import AdSupport
 
@@ -45,9 +46,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         // GoogleAdMobSDKの初期化。ios14以降はユーザーの許可が必要。
         if #available(iOS 14, *) {
             ATTrackingManager.requestTrackingAuthorization() { status in
-                GADMobileAds.sharedInstance().start(completionHandler: nil)
+                switch status {
+                case .authorized:
+                    Analytics.setAnalyticsCollectionEnabled(true)
+                    GADMobileAds.sharedInstance().start(completionHandler: nil)
+                default:
+                    GADMobileAds.sharedInstance().start(completionHandler: nil)
+                }
             }
         } else {
+            Analytics.setAnalyticsCollectionEnabled(true)
             GADMobileAds.sharedInstance().start(completionHandler: nil)
         }
         

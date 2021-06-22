@@ -130,7 +130,7 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
     // インタースティシャル広告作成
     private func createInterstitial(){
         let request = GADRequest()
-        GADInterstitialAd.load(withAdUnitID:"ca-app-pub-3940256099942544/4411468910",
+        GADInterstitialAd.load(withAdUnitID:"ca-app-pub-1224671279223808~7472614300",
                                request: request) { [self] ad, error in
             if let error = error {
                 print("Failed to load interstitial ad with error: \(error.localizedDescription)")
@@ -285,7 +285,7 @@ class ItemTableViewController: UIViewController, UITableViewDelegate, UITableVie
         
         // content
         let content = UNMutableNotificationContent()
-        content.title = "あれを買って1年経ちました...覚えてますか？"
+        content.title = "一年前に登録した商品があります"
         content.body = "見返しましょう！"
         content.sound = UNNotificationSound.default
         
